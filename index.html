@@ -3,116 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض أعمالي | Abdelkaioum</title>
+    <title>Abdelkaioum | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f172a;
-            color: #e2e8f0;
+        :root {
+            --bg-darker: #05070c;
+            --bg-dark: #0a0f18;
+            --bg-card: #111827;
+            --accent-blue: #38bdf8;
+            --text-light: #ffffff;
+            --text-muted: #9ca3af;
+            --border-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-darker);
+            color: var(--text-light);
             line-height: 1.6;
         }
-        header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            padding: 80px 20px;
-            text-align: center;
-            border-bottom: 1px solid #334155;
+
+        /* القائمة العلوية الثابتة */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 7, 12, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
         }
-        header h1 {
-            margin: 0;
-            color: #38bdf8;
-            font-size: 2.5rem;
+
+        nav .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
         }
-        header p {
-            color: #94a3b8;
+
+        nav .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        nav .nav-links a:hover, nav .nav-links a.active {
+            color: var(--accent-blue);
+        }
+
+        nav .phone-number {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            direction: ltr;
+        }
+
+        /* القسم الأول: الواجهة الرئيسية (Hero Section) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 8% 60px 8%;
+            background: radial-gradient(circle at 80% 40%, rgba(56, 189, 248, 0.08) 0%, rgba(5, 7, 12, 0) 60%);
+        }
+
+        .hero-text h2 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin: 10px 0 20px 0;
+            letter-spacing: -1px;
+        }
+
+        .hero-text p {
+            color: var(--accent-blue);
             font-size: 1.2rem;
-            margin-top: 10px;
+            font-weight: 600;
+            margin-bottom: 40px;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
         }
-        .card {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 20px;
-            transition: transform 0.2s;
+
+        .btn-outline {
+            border: 1px solid var(--text-light);
+            color: var(--text-light);
+            padding: 10px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
         }
-        .card:hover {
-            transform: translateY(-5px);
+
+        .btn-outline:hover {
+            background-color: var(--text-light);
+            color: var(--bg-darker);
         }
-        .card h3 {
-            color: #38bdf8;
-            margin-top: 0;
-            border-bottom: 1px solid #334155;
+
+        .btn-outline.active {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .btn-outline.active:hover {
+            background-color: var(--accent-blue);
+            color: var(--bg-darker);
+        }
+
+        /* القسم الثاني: نبذة عني (About Section) */
+        .about {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-dark);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 80px 8%;
+            position: relative;
+            background: radial-gradient(circle at left, rgba(56, 189, 248, 0.05) 0%, rgba(10, 15, 24, 0) 50%);
+        }
+
+        .about-content {
+            max-width: 600px;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .about-content .email {
+            color: var(--accent-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .location {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 50px;
+            border-right: 2px solid var(--accent-blue);
+            padding-right: 15px;
+        }
+
+        /* القسم الثالث: المهارات والخبرة (Dashboard Section) */
+        .dashboard {
+            padding: 100px 8%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .dashboard-column h4 {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
         }
-        .btn {
-            display: inline-block;
-            background-color: #38bdf8;
-            color: #0f172a;
-            padding: 12px 24px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
+
+        /* شريط المهارات مع الدائرة المضيئة */
+        .skill-item {
+            margin-bottom: 25px;
         }
-        .btn:hover {
-            background-color: #0ea5e9;
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
         }
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #64748b;
-            border-top: 1px solid #334155;
-            margin-top: 40px;
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: var(--border-color);
+            position: relative;
+            border-radius: 2px;
         }
-        ul {
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--text-light);
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-blue), 0 0 20px var(--accent-blue);
+        }
+
+        /* خط زمني للخبرة المهنية */
+        .timeline {
+            position: relative;
+            border-right: 2px solid var(--border-color);
             padding-right: 20px;
+            list-style: none;
         }
-        li {
-            margin-bottom: 10px;
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--bg-darker);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+        }
+
+        .timeline-item h5 {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .timeline-item span {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* القوائم النصية الجانبية */
+        .text-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .text-list li {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .text-list li strong {
+            color: var(--text-light);
+            display: block;
+            font-size: 1rem;
+        }
+
+        /* التوافق مع الهواتف والأجهزة اللوحية */
+        @media (max-width: 900px) {
+            nav .phone-number { display: none; }
+            .hero { flex-direction: column; text-align: center; justify-content: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .dashboard { grid-template-columns: 1fr; gap: 50px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>عبد القيوم | Abdelkaioum</h1>
-        <p>خبير تسويق إلكتروني وتطوير حملات إعلانية رقمية</p>
-    </header>
+    <!-- القائمة العلوية -->
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#" class="active">الرئيسية</a></li>
+            <li><a href="#">نبذة عني</a></li>
+            <li><a href="#">الخبرات</a></li>
+            <li><a href="#">المشاريع</a></li>
+        </ul>
+        <div class="phone-number">+20 123 456 7890</div>
+    </nav>
 
-    <div class="container">
+    <!-- الواجهة الرئيسية -->
+    <section class="hero">
+        <div class="hero-text">
+            <h2>مرحباً بك، أنا</h2>
+            <h1>عبد القيوم</h1>
+            <p>أخصائي تسويق رقمي ومسؤول حملات إعلانية (Media Buyer)</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-outline">تحميل السيرة الذاتية</a>
+                <a href="#" class="btn-outline active">معرض الأعمال</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم نبذة عني -->
+    <section class="about">
+        <div class="about-content">
+            <h3>نبذة عني</h3>
+            <a href="mailto:abdelkaioum@example.com" class="email">abdelkaioum@example.com</a>
+            <p>
+                متخصص تسويق إلكتروني ممتد الخبرة في إدارة وتحسين الميزانيات الإعلانية الرقمية. أركز بشكل أساسي على التحليل المنطقي وقراءة كشوفات البيانات لتحديد الفئات المستهدفة بدقة تضمن تحقيق أعلى معدلات تحويل ومبيعات، مع خفض تكاليف الاستحواذ على العملاء الجدد ومضاعفة العائد الإعلاني.
+            </p>
+            <div class="location">
+                القاهرة، مصر<br>
+                التجمع الخامس، شركة افتراضية
+            </div>
+        </div>
+    </section>
+
+    <!-- لوحة التحكم بالمهارات والخبرات -->
+    <section class="dashboard">
         
-        <div class="card">
-            <h3>من أنا؟</h3>
-            <p>أنا أخصائي تسويق إلكتروني، أساعد الشركات على النمو وزيادة مبيعاتها من خلال إطلاق وإدارة حملات إعلانية مبتكرة ومستهدفة بدقة على مختلف المنصات الرقمية لضمان تحقيق أفضل عائد على الاستثمار (ROI).</p>
+        <!-- العمود الأول: المهارات التقنية واللغات -->
+        <div class="dashboard-column">
+            <h4>المهارات الإعلانية</h4>
+            
+            <div class="skill-item">
+                <div class="skill-info"><span>إعلانات ميتا (Facebook & Instagram Ads)</span><span>95%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-info"><span>إعلانات جوجل (Google Search & Display)</span><span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info"><span>إعلانات تيك توك (TikTok Ads)</span><span>80%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info"><span>تحليل البيانات (Google Analytics)</span><span>75%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+            </div>
+
+            <h4 style="margin-top: 50px;">اللغات</h4>
+            <div class="skill-item">
+                <div class="skill-info"><span>العربية (اللغة الأم)</span><span>100%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="style-width: 100%;"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-info"><span>الإنجليزية</span><span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
         </div>
 
-        <div class="card">
-            <h3>الخدمات التي أقدمها</h3>
-            <ul>
-                <li>إدارة الإعلانات الممولة (Meta Ads, Google Ads, TikTok Ads).</li>
-                <li>إعداد الخطط التسويقية وتحليل المنافسين في السوق.</li>
-                <li>كتابة النصوص الإعلانية الجذابة وصناعة محتوى يركز على البيع (Copywriting).</li>
+        <!-- العمود الثاني: الخبرة العملية والقدرات -->
+        <div class="dashboard-column">
+            <h4>الخبرة المهنية</h4>
+            <ul class="timeline">
+                <li class="timeline-item">
+                    <h5>خبير ميديا بايرنج (Media Buyer)</h5>
+                    <span>2024 - الحالي</span>
+                    <p>إدارة حملات ترويجية ضخمة لشركات تجارة إلكترونية محلية وإقليمية وتحقيق عائد إنفاق إعلاني ممتاز.</p>
+                </li>
+                <li class="timeline-item">
+                    <h5>أخصائي تسويق أداء (Performance Marketer)</h5>
+                    <span>2022 - 2024</span>
+                    <p>صياغة استراتيجيات قنوات البيع (Sales Funnels) وبناء صفحات هبوط مخصصة لرفع كفاءة التحويل المباشر لطلبات الشراء.</p>
+                </li>
+            </ul>
+
+            <h4>ماذا يمكنني أن أقدم لمشروعك؟</h4>
+            <ul class="text-list">
+                <li><strong>زيادة المبيعات والأرباح:</strong> تحويل الميزانية الإعلانية الراكدة إلى حملات تدر مبيعات فعلية متكررة وبشكل مدروس بالكامل.</li>
+                <li><strong>استهداف الفئة الذهبية:</strong> الوصول الدقيق للجمهور المستعد للشراء الفوري بدلاً من إهدار الميزانيات على نقرات غير مهتمة.</li>
             </ul>
         </div>
 
-        <div class="card" style="text-align: center;">
-            <h3>هل أنت مستعد لتكبير حجم أعمالك؟</h3>
-            <p>دعنا نتحدث لنناقش كيف يمكنني مساعدتك في زيادة أرباح مشروعك الحالي.</p>
-            <a href="mailto:your-email@example.com" class="btn">تواصل معي الآن</a>
-        </div>
-
-    </div>
-
-    <footer>
-        <p>© 2026 جميع الحقوق محفوظة لـ عبد القيوم</p>
-    </footer>
+    </section>
 
 </body>
 </html>
