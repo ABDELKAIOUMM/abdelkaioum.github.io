@@ -82,6 +82,10 @@
             gap: 40px;
         }
 
+        .hero-text {
+            flex: 1;
+        }
+
         .hero-text h2 {
             font-size: 1.5rem;
             color: var(--text-muted);
@@ -109,21 +113,23 @@
             gap: 15px;
         }
 
-        /* تنسيقات الصورة الشخصية */
+        /* قسم الصورة الشخصية المفرغة بدون إطار وبحجم يتناسب مع المساحة الجانبية */
         .hero-image {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-shrink: 0;
+            flex: 1;
         }
 
         .hero-image img {
-            width: 320px;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid var(--accent-blue);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
+            width: 100%;
+            max-width: 520px; /* تكبير الصورة لتملأ تقريباً 75% من الجانب الفارغ */
+            height: auto;
+            object-fit: contain;
+            border-radius: 0; /* إلغاء التقطيع الدائري */
+            border: none; /* إلغاء الإطار */
+            box-shadow: none; /* إلغاء التوهج الدائري */
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7)); /* ظل ناعم يتتبع حدود الجسم المفرغ */
         }
 
         .btn-outline {
@@ -332,8 +338,7 @@
             .hero-buttons { justify-content: center; }
             .hero-text h1 { font-size: 2.8rem; }
             .hero-image img {
-                width: 220px;
-                height: 220px;
+                max-width: 300px;
             }
             .dashboard { grid-template-columns: 1fr; gap: 50px; }
         }
@@ -365,7 +370,7 @@
             </div>
         </div>
 
-        <!-- قسم الصورة الشخصية (يظهر في الجانب الأيسر) -->
+        <!-- قسم الصورة الشخصية المفرغة -->
         <div class="hero-image">
             <img src="profile.png" alt="عبد القيوم - أخصائي تسويق رقمي">
         </div>
