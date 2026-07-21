@@ -79,6 +79,7 @@
             justify-content: space-between;
             padding: 100px 8% 60px 8%;
             background: radial-gradient(circle at 80% 40%, rgba(56, 189, 248, 0.08) 0%, rgba(5, 7, 12, 0) 60%);
+            gap: 40px;
         }
 
         .hero-text h2 {
@@ -106,6 +107,23 @@
         .hero-buttons {
             display: flex;
             gap: 15px;
+        }
+
+        /* تنسيقات الصورة الشخصية */
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .hero-image img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--accent-blue);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
         }
 
         .btn-outline {
@@ -305,9 +323,18 @@
         /* التوافق مع الهواتف والأجهزة اللوحية */
         @media (max-width: 900px) {
             nav .phone-number { display: none; }
-            .hero { flex-direction: column; text-align: center; justify-content: center; }
+            .hero { 
+                flex-direction: column-reverse; 
+                text-align: center; 
+                justify-content: center; 
+                padding-top: 130px;
+            }
             .hero-buttons { justify-content: center; }
             .hero-text h1 { font-size: 2.8rem; }
+            .hero-image img {
+                width: 220px;
+                height: 220px;
+            }
             .dashboard { grid-template-columns: 1fr; gap: 50px; }
         }
     </style>
@@ -327,6 +354,7 @@
 
     <!-- الواجهة الرئيسية -->
     <section class="hero">
+        <!-- قسم النصوص -->
         <div class="hero-text">
             <h2>مرحباً بك، أنا</h2>
             <h1>عبد القيوم</h1>
@@ -335,6 +363,11 @@
                 <a href="#" class="btn-outline">تحميل السيرة الذاتية</a>
                 <a href="#" class="btn-outline active">معرض الأعمال</a>
             </div>
+        </div>
+
+        <!-- قسم الصورة الشخصية (يظهر في الجانب الأيسر) -->
+        <div class="hero-image">
+            <img src="profile.png" alt="عبد القيوم - أخصائي تسويق رقمي">
         </div>
     </section>
 
@@ -383,7 +416,7 @@
             <h4 style="margin-top: 50px;">اللغات</h4>
             <div class="skill-item">
                 <div class="skill-info"><span>العربية (اللغة الأم)</span><span>100%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="style-width: 100%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
             </div>
             <div class="skill-item">
                 <div class="skill-info"><span>الإنجليزية</span><span>85%</span></div>
