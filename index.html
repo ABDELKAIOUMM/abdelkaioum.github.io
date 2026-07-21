@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abdelkaioum Beldjoudi | Portfolio</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome CDN for Official Brand Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
             --bg-darker: #05070c;
@@ -398,7 +404,6 @@
         }
 
         .card-icon {
-            font-size: 1.6rem;
             background: rgba(56, 189, 248, 0.1);
             width: 50px;
             height: 50px;
@@ -406,6 +411,25 @@
             align-items: center;
             justify-content: center;
             border-radius: 12px;
+        }
+
+        .card-icon i {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            transition: color 0.3s ease;
+        }
+
+        /* Hover brand colors */
+        .contact-card:hover .icon-whatsapp {
+            color: #25D366;
+        }
+
+        .contact-card:hover .icon-gmail {
+            color: #EA4335;
+        }
+
+        .contact-card:hover .icon-linkedin {
+            color: #0A66C2;
         }
 
         .card-info {
@@ -462,7 +486,7 @@
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="phone-number">+20 123 456 7890</div>
+        <div class="phone-number">+20 112 911 4212</div>
     </nav>
 
     <!-- Section 1: Hero Section -->
@@ -486,7 +510,7 @@
     <section class="about reveal" id="about">
         <div class="about-content">
             <h3>About Me</h3>
-            <a href="mailto:abdelkaioum@example.com" class="email">abdelkaioum@example.com</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abdlkayomd@gmail.com" target="_blank" class="email">abdlkayomd@gmail.com</a>
             <p>
                 Experienced Digital Marketing Specialist specializing in managing and optimizing performance ad budgets. I leverage logical analysis and data interpretation to define precise target audiences, maximizing conversions and ROAS while keeping Customer Acquisition Costs (CAC) to a minimum.
             </p>
@@ -569,15 +593,20 @@
             <div class="contact-cards">
                 <!-- WhatsApp Link -->
                 <a href="https://wa.me/201129114212" target="_blank" class="contact-card">
-                    <div class="card-icon">💬</div>
+                    <div class="card-icon">
+                        <i class="fa-brands fa-whatsapp icon-whatsapp"></i>
+                    </div>
                     <div class="card-info">
                         <h3>WhatsApp</h3>
                         <span>Chat Directly</span>
                     </div>
                 </a>
 
-                <!-- Email Link -->
-<a href="https://mail.google.com/mail/?view=cm&fs=1&to=abdlkayomd@gmail.com" target="_blank" class="contact-card">                    <div class="card-icon">✉️</div>
+                <!-- Email Link (Gmail Direct Web) -->
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abdlkayomd@gmail.com" target="_blank" class="contact-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-envelope icon-gmail"></i>
+                    </div>
                     <div class="card-info">
                         <h3>Email</h3>
                         <span>Send a Message</span>
@@ -586,7 +615,9 @@
 
                 <!-- LinkedIn Link -->
                 <a href="https://www.linkedin.com/in/abdelkaioum-beldjoudi-64585b228/" target="_blank" class="contact-card">
-                    <div class="card-icon">💼</div>
+                    <div class="card-icon">
+                        <i class="fa-brands fa-linkedin-in icon-linkedin"></i>
+                    </div>
                     <div class="card-info">
                         <h3>LinkedIn</h3>
                         <span>Connect Professionally</span>
