@@ -77,14 +77,14 @@
         nav .nav-links {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 22px;
         }
 
         nav .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         nav .nav-links a:hover, nav .nav-links a.active {
@@ -202,7 +202,7 @@
         .section-header {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 60px auto;
+            margin: 0 auto 50px auto;
         }
 
         .section-header h2 {
@@ -220,7 +220,6 @@
             line-height: 1.7;
         }
 
-        /* Canvas Pipeline Container */
         .pipeline-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -229,7 +228,6 @@
             margin-bottom: 60px;
         }
 
-        /* Connecting Glow Line behind cards */
         .pipeline-container::before {
             content: '';
             position: absolute;
@@ -304,12 +302,49 @@
             line-height: 1.7;
         }
 
-        /* Section 4: Services Offered */
+        /* Section 4: Services Offered & Expertise Badges (Like Image) */
         .services-section {
             padding: 90px 8%;
             background-color: var(--bg-dark);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Expertise Badges Wrapper (Image Style) */
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .tag-badge {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .tag-badge:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-light);
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.15);
+        }
+
+        .tag-badge i {
+            color: var(--accent-blue);
+            font-size: 0.95rem;
         }
 
         .services-grid {
@@ -323,7 +358,6 @@
             border: 1px solid var(--border-color);
             padding: 30px;
             border-radius: 16px;
-            position: relative;
         }
 
         .service-card:hover {
@@ -350,40 +384,87 @@
             line-height: 1.6;
         }
 
-        /* Call-To-Action Banner inside Canvas */
-        .canvas-cta {
-            background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 15, 24, 0.9) 100%);
+        /* Section 5: Tools & Tech Stack Section */
+        .tools-section {
+            padding: 100px 8%;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .tools-card {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            margin-top: 40px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 18px;
+            padding: 28px;
         }
 
-        .canvas-cta h3 {
-            font-size: 1.6rem;
+        .tools-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .tools-card h4 {
+            font-size: 1.15rem;
             color: var(--text-light);
-            margin-bottom: 15px;
-            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            font-weight: 700;
         }
 
-        .canvas-cta p {
+        .tools-card h4 i {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .tools-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tool-chip {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 25px;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
         }
 
-        /* Section 5: Skills & Experience Dashboard */
+        .tool-chip:hover {
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .tool-chip i {
+            font-size: 1rem;
+        }
+
+        /* Section 6: Skills & Experience Dashboard */
         .dashboard {
             padding: 100px 8%;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 80px;
+            background-color: var(--bg-dark);
         }
 
         .dashboard-column h4 {
@@ -411,10 +492,10 @@
         .text-list li { color: var(--text-muted); margin-bottom: 12px; font-size: 0.95rem; }
         .text-list li strong { color: var(--text-light); display: block; font-size: 1rem; }
 
-        /* Section 6: Contact & CTA Section */
+        /* Section 7: Contact & CTA Section */
         .contact-cta {
             padding: 100px 8%;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-darker);
             border-top: 1px solid var(--border-color);
             text-align: center;
         }
@@ -471,6 +552,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#strategy">Strategy Canvas</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#tools">Tools & Tech</a></li>
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -572,22 +654,24 @@
                 </div>
             </div>
         </div>
-
-        <!-- Strategy CTA Banner -->
-        <div class="canvas-cta reveal">
-            <h3>Ready to Stop Random Testing and Scale Safely?</h3>
-            <p>
-                Let's move your business away from trial-and-error advertising and deploy a well-studied growth strategy tailored to your exact industry.
-            </p>
-            <a href="#contact" class="btn-outline active">Start Planning Together</a>
-        </div>
     </section>
 
-    <!-- Section 4: Services Grid -->
+    <!-- Section 4: Services Offered & Expertise Badges -->
     <section class="services-section reveal" id="services">
         <div class="section-header">
-            <h2>Strategic Services I Offer</h2>
-            <p>Designed to transform your ad spend into predictable revenue.</p>
+            <h2>Services & Core Expertise</h2>
+            <p>Comprehensive growth capabilities tailored to boost revenue.</p>
+        </div>
+
+        <!-- Expertise Badges (Inspired by Image) -->
+        <div class="tags-wrapper">
+            <span class="tag-badge"><i class="fa-solid fa-chess"></i> Marketing Strategy</span>
+            <span class="tag-badge"><i class="fa-solid fa-rectangle-ad"></i> Digital Advertising</span>
+            <span class="tag-badge"><i class="fa-solid fa-share-nodes"></i> Social Media Marketing</span>
+            <span class="tag-badge"><i class="fa-solid fa-bullhorn"></i> Brand Marketing</span>
+            <span class="tag-badge"><i class="fa-solid fa-pen-nib"></i> Content Strategy</span>
+            <span class="tag-badge"><i class="fa-solid fa-chart-line"></i> Performance Marketing</span>
+            <span class="tag-badge"><i class="fa-solid fa-filter-circle-dollar"></i> Sales Funnel Optimization</span>
         </div>
 
         <div class="services-grid">
@@ -611,7 +695,80 @@
         </div>
     </section>
 
-    <!-- Section 5: Skills & Experience Dashboard -->
+    <!-- Section 5: Tools & Tech Stack -->
+    <section class="tools-section reveal" id="tools">
+        <div class="section-header">
+            <h2>Tools & Tech Stack</h2>
+            <p>The specialized tools and platforms I leverage to conduct deep research, execute campaigns, and track performance.</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Paid Advertising Platforms -->
+            <div class="tools-card">
+                <h4><i class="fa-solid fa-rectangle-ad"></i> Advertising Platforms</h4>
+                <div class="tools-chips-container">
+                    <span class="tool-chip"><i class="fa-brands fa-meta" style="color: #0668E1;"></i> Meta Ads Manager</span>
+                    <span class="tool-chip"><i class="fa-brands fa-google" style="color: #4285F4;"></i> Google Ads</span>
+                    <span class="tool-chip"><i class="fa-brands fa-tiktok" style="color: #000000;"></i> TikTok Ads</span>
+                    <span class="tool-chip"><i class="fa-brands fa-snapchat" style="color: #FFFC00;"></i> Snapchat Ads</span>
+                </div>
+            </div>
+
+            <!-- Market Research & Trend Tools -->
+            <div class="tools-card">
+                <h4><i class="fa-solid fa-magnifying-glass-chart"></i> Research & Intelligence</h4>
+                <div class="tools-chips-container">
+                    <span class="tool-chip"><i class="fa-solid fa-chart-line" style="color: #38bdf8;"></i> Google Trends</span>
+                    <span class="tool-chip"><i class="fa-solid fa-photo-film" style="color: #818cf8;"></i> Meta Ad Library</span>
+                    <span class="tool-chip"><i class="fa-solid fa-fire" style="color: #ff4757;"></i> TikTok Creative Center</span>
+                    <span class="tool-chip"><i class="fa-solid fa-globe" style="color: #2ed573;"></i> Similarweb</span>
+                </div>
+            </div>
+
+            <!-- Deep Research AI Engines -->
+            <div class="tools-card">
+                <h4><i class="fa-solid fa-brain"></i> AI Deep Research Tools</h4>
+                <div class="tools-chips-container">
+                    <span class="tool-chip"><i class="fa-solid fa-compass" style="color: #20b2aa;"></i> Perplexity AI</span>
+                    <span class="tool-chip"><i class="fa-solid fa-robot" style="color: #10a37f;"></i> ChatGPT Plus</span>
+                    <span class="tool-chip"><i class="fa-solid fa-sparkles" style="color: #d97706;"></i> Claude AI</span>
+                    <span class="tool-chip"><i class="fa-solid fa-gem" style="color: #8a2be2;"></i> Google Gemini</span>
+                </div>
+            </div>
+
+            <!-- Analytics & Tracking Infrastructure -->
+            <div class="tools-card">
+                <h4><i class="fa-solid fa-chart-column"></i> Analytics & Tracking</h4>
+                <div class="tools-chips-container">
+                    <span class="tool-chip"><i class="fa-solid fa-chart-simple" style="color: #f59e0b;"></i> Google Analytics 4 (GA4)</span>
+                    <span class="tool-chip"><i class="fa-solid fa-tag" style="color: #3b82f6;"></i> Google Tag Manager</span>
+                    <span class="tool-chip"><i class="fa-solid fa-code" style="color: #0668E1;"></i> Meta Pixel & CAPI</span>
+                </div>
+            </div>
+
+            <!-- Data & Administrative Software -->
+            <div class="tools-card">
+                <h4><i class="fa-solid fa-table"></i> Data & Office Software</h4>
+                <div class="tools-chips-container">
+                    <span class="tool-chip"><i class="fa-solid fa-file-excel" style="color: #107c41;"></i> Advanced MS Excel</span>
+                    <span class="tool-chip"><i class="fa-solid fa-file-csv" style="color: #0f9d58;"></i> Google Sheets</span>
+                    <span class="tool-chip"><i class="fa-solid fa-desktop" style="color: #38bdf8;"></i> Office Operations</span>
+                </div>
+            </div>
+
+            <!-- Store & Infrastructure -->
+            <div class="tools-card">
+                <h4><i class="fa-solid fa-laptop-code"></i> Store & Web Infrastructure</h4>
+                <div class="tools-chips-container">
+                    <span class="tool-chip"><i class="fa-brands fa-shopify" style="color: #95bf47;"></i> Shopify</span>
+                    <span class="tool-chip"><i class="fa-solid fa-code" style="color: #007acc;"></i> VS Code</span>
+                    <span class="tool-chip"><i class="fa-brands fa-html5" style="color: #e34f26;"></i> HTML5 / CSS3</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Skills & Experience Dashboard -->
     <section class="dashboard reveal" id="experience">
         <div class="dashboard-column">
             <h4>Advertising Skills</h4>
@@ -670,7 +827,7 @@
         </div>
     </section>
 
-    <!-- Section 6: Contact & CTA Section -->
+    <!-- Section 7: Contact & CTA Section -->
     <section class="contact-cta reveal" id="contact">
         <div class="cta-container">
             <h2>Ready to Scale Your Business?</h2>
