@@ -33,7 +33,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
@@ -44,16 +44,17 @@
             overflow-x: hidden;
         }
 
-        /* Scroll Animation Classes */
+        /* Enhanced Scroll Animation Classes */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(60px) scale(0.95);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
 
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         /* Fixed Navigation Bar */
@@ -63,13 +64,13 @@
             left: 0;
             right: 0;
             background: rgba(5, 7, 12, 0.85);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 18px 5%;
         }
 
         nav .nav-links {
@@ -89,9 +90,54 @@
             color: var(--accent-blue);
         }
 
+        /* Top Bar Right Section (Phone & Social Icons) */
+        nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
         nav .phone-number {
             color: var(--text-muted);
             font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .nav-socials {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border-left: 1px solid var(--border-color);
+            padding-left: 15px;
+        }
+
+        .nav-socials a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-socials a:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        }
+
+        .nav-socials a:hover .icon-instagram {
+            color: #E4405F;
+        }
+
+        .nav-socials a:hover .icon-facebook {
+            color: #1877F2;
         }
 
         /* Section 1: Hero Section */
@@ -137,7 +183,7 @@
             gap: 15px;
         }
 
-        /* Hero Image Container */
+        /* Hero Image Container with Floating Animation */
         .hero-image {
             display: flex;
             justify-content: center;
@@ -150,10 +196,13 @@
             max-width: 580px;
             height: auto;
             object-fit: contain;
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
             filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+            animation: floatImage 4s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
         }
 
         .btn-outline {
@@ -169,6 +218,8 @@
         .btn-outline:hover {
             background-color: var(--text-light);
             color: var(--bg-darker);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
 
         .btn-outline.active {
@@ -179,6 +230,7 @@
         .btn-outline.active:hover {
             background-color: var(--accent-blue);
             color: var(--bg-darker);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.25);
         }
 
         /* Section 2: About Me Section */
@@ -248,7 +300,7 @@
             padding-bottom: 10px;
         }
 
-        /* Skill Progress Bars */
+        /* Animated Progress Bars */
         .skill-item {
             margin-bottom: 25px;
         }
@@ -267,26 +319,17 @@
             background-color: var(--border-color);
             position: relative;
             border-radius: 2px;
+            overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background-color: var(--text-light);
+            background-color: var(--accent-blue);
             position: relative;
             border-radius: 2px;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-blue);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-blue), 0 0 20px var(--accent-blue);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 10px var(--accent-blue);
         }
 
         /* Professional Experience Timeline */
@@ -394,13 +437,13 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .contact-card:hover {
             border-color: var(--accent-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(56, 189, 248, 0.15);
         }
 
         .card-icon {
@@ -486,7 +529,18 @@
             <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <div class="phone-number">+20 112 911 4212</div>
+        
+        <div class="nav-right">
+            <div class="phone-number">+20 112 911 4212</div>
+            <div class="nav-socials">
+                <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram icon-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook icon-facebook"></i>
+                </a>
+            </div>
+        </div>
     </nav>
 
     <!-- Section 1: Hero Section -->
@@ -529,32 +583,32 @@
             
             <div class="skill-item">
                 <div class="skill-info"><span>Meta Ads (Facebook & Instagram Ads)</span><span>95%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="95%"></div></div>
             </div>
             
             <div class="skill-item">
                 <div class="skill-info"><span>Google Ads (Search & Display)</span><span>85%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div>
             </div>
 
             <div class="skill-item">
                 <div class="skill-info"><span>TikTok Ads</span><span>80%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="80%"></div></div>
             </div>
 
             <div class="skill-item">
                 <div class="skill-info"><span>Data Analytics (Google Analytics)</span><span>75%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="75%"></div></div>
             </div>
 
             <h4 style="margin-top: 50px;">Languages</h4>
             <div class="skill-item">
                 <div class="skill-info"><span>Arabic (Native)</span><span>100%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="100%"></div></div>
             </div>
             <div class="skill-item">
                 <div class="skill-info"><span>English</span><span>85%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div>
             </div>
         </div>
 
@@ -632,12 +686,12 @@
         <p>© 2026 Abdelkaioum Beldjoudi. All rights reserved.</p>
     </footer>
 
-    <!-- Scroll Animation Script (Intersection Observer) -->
+    <!-- Interactive Animations Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation
             const reveals = document.querySelectorAll('.reveal');
-
-            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            const revealOnScroll = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
@@ -648,6 +702,23 @@
             });
 
             reveals.forEach(reveal => revealOnScroll.observe(reveal));
+
+            // Animated Skill Progress Bars
+            const skillBars = document.querySelectorAll('.skill-item');
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progress = entry.target.querySelector('.progress-fill');
+                        if (progress) {
+                            progress.style.width = progress.getAttribute('data-width');
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+
+            skillBars.forEach(bar => skillObserver.observe(bar));
         });
     </script>
 </body>
