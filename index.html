@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,7 @@
             line-height: 1.6;
         }
 
-        /* القائمة العلوية الثابتة */
+        /* Fixed Navigation Bar */
         nav {
             position: fixed;
             top: 0;
@@ -68,17 +68,16 @@
         nav .phone-number {
             color: var(--text-muted);
             font-size: 0.9rem;
-            direction: ltr;
         }
 
-        /* القسم الأول: الواجهة الرئيسية (Hero Section) */
+        /* Section 1: Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 100px 8% 60px 8%;
-            background: radial-gradient(circle at 80% 40%, rgba(56, 189, 248, 0.08) 0%, rgba(5, 7, 12, 0) 60%);
+            background: radial-gradient(circle at 20% 40%, rgba(56, 189, 248, 0.08) 0%, rgba(5, 7, 12, 0) 60%);
             gap: 40px;
         }
 
@@ -94,7 +93,7 @@
         }
 
         .hero-text h1 {
-            font-size: 4rem;
+            font-size: 3.8rem;
             font-weight: 900;
             line-height: 1.1;
             margin: 10px 0 20px 0;
@@ -103,9 +102,10 @@
 
         .hero-text p {
             color: var(--accent-blue);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
             margin-bottom: 40px;
+            max-width: 600px;
         }
 
         .hero-buttons {
@@ -113,7 +113,7 @@
             gap: 15px;
         }
 
-        /* قسم الصورة الشخصية المفرغة بدون إطار وبحجم يتناسب مع المساحة الجانبية */
+        /* Hero Image Container */
         .hero-image {
             display: flex;
             justify-content: center;
@@ -123,13 +123,13 @@
 
         .hero-image img {
             width: 100%;
-            max-width: 620px; /* تكبير الصورة لتملأ تقريباً 75% من الجانب الفارغ */
+            max-width: 620px;
             height: auto;
             object-fit: contain;
-            border-radius: 0; /* إلغاء التقطيع الدائري */
-            border: none; /* إلغاء الإطار */
-            box-shadow: none; /* إلغاء التوهج الدائري */
-            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7)); /* ظل ناعم يتتبع حدود الجسم المفرغ */
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
         }
 
         .btn-outline {
@@ -157,7 +157,7 @@
             color: var(--bg-darker);
         }
 
-        /* القسم الثاني: نبذة عني (About Section) */
+        /* Section 2: About Me Section */
         .about {
             min-height: 90vh;
             display: flex;
@@ -167,11 +167,11 @@
             border-bottom: 1px solid var(--border-color);
             padding: 80px 8%;
             position: relative;
-            background: radial-gradient(circle at left, rgba(56, 189, 248, 0.05) 0%, rgba(10, 15, 24, 0) 50%);
+            background: radial-gradient(circle at right, rgba(56, 189, 248, 0.05) 0%, rgba(10, 15, 24, 0) 50%);
         }
 
         .about-content {
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .about-content h3 {
@@ -195,18 +195,18 @@
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 30px;
-            text-align: justify;
+            text-align: left;
         }
 
         .location {
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-top: 50px;
-            border-right: 2px solid var(--accent-blue);
-            padding-right: 15px;
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 15px;
         }
 
-        /* القسم الثالث: المهارات والخبرة (Dashboard Section) */
+        /* Section 3: Skills & Experience (Dashboard Section) */
         .dashboard {
             padding: 100px 8%;
             display: grid;
@@ -224,7 +224,7 @@
             padding-bottom: 10px;
         }
 
-        /* شريط المهارات مع الدائرة المضيئة */
+        /* Skill Progress Bars */
         .skill-item {
             margin-bottom: 25px;
         }
@@ -255,7 +255,7 @@
         .progress-fill::after {
             content: '';
             position: absolute;
-            left: 0;
+            right: 0;
             top: 50%;
             transform: translateY(-50%);
             width: 10px;
@@ -265,11 +265,11 @@
             box-shadow: 0 0 10px var(--accent-blue), 0 0 20px var(--accent-blue);
         }
 
-        /* خط زمني للخبرة المهنية */
+        /* Professional Experience Timeline */
         .timeline {
             position: relative;
-            border-right: 2px solid var(--border-color);
-            padding-right: 20px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
             list-style: none;
         }
 
@@ -281,7 +281,7 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            right: -26px;
+            left: -26px;
             top: 5px;
             width: 10px;
             height: 10px;
@@ -308,7 +308,7 @@
             font-size: 0.9rem;
         }
 
-        /* القوائم النصية الجانبية */
+        /* List Items */
         .text-list {
             list-style: none;
             margin-bottom: 40px;
@@ -326,7 +326,7 @@
             font-size: 1rem;
         }
 
-        /* التوافق مع الهواتف والأجهزة اللوحية */
+        /* Responsive Design */
         @media (max-width: 900px) {
             nav .phone-number { display: none; }
             .hero { 
@@ -346,110 +346,110 @@
 </head>
 <body>
 
-    <!-- القائمة العلوية -->
+    <!-- Header Navigation -->
     <nav>
         <ul class="nav-links">
-            <li><a href="#" class="active">الرئيسية</a></li>
-            <li><a href="#">نبذة عني</a></li>
-            <li><a href="#">الخبرات</a></li>
-            <li><a href="#">المشاريع</a></li>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">About Me</a></li>
+            <li><a href="#">Experience</a></li>
+            <li><a href="#">Projects</a></li>
         </ul>
         <div class="phone-number">+20 123 456 7890</div>
     </nav>
 
-    <!-- الواجهة الرئيسية -->
+    <!-- Hero Section -->
     <section class="hero">
-        <!-- قسم النصوص -->
+        <!-- Text Content -->
         <div class="hero-text">
-            <h2>مرحباً بك، أنا</h2>
-            <h1>Adelkaioum Beldjoudi</h1>
+            <h2>Welcome, I am</h2>
+            <h1>Abdelkaioum Beldjoudi</h1>
             
-            <p>Meta Ads Specialist & Marketing Strategist | Helping Businesses Grow with Marketing Plans & High-Converting Campaigns
-
-</p>
+            <p>Meta Ads Specialist & Marketing Strategist | Helping Businesses Grow with Marketing Plans & High-Converting Campaigns</p>
             <div class="hero-buttons">
+                <a href="#" class="btn-outline">Download CV</a>
+                <a href="#" class="btn-outline active">Portfolio</a>
             </div>
         </div>
 
-        <!-- قسم الصورة الشخصية المفرغة -->
+        <!-- Transparent Profile Image -->
         <div class="hero-image">
-            <img src="profile.png" alt="عبد القيوم - أخصائي تسويق رقمي">
+            <img src="profile.png" alt="Abdelkaioum Beldjoudi - Digital Marketing Specialist">
         </div>
     </section>
 
-    <!-- قسم نبذة عني -->
+    <!-- About Me Section -->
     <section class="about">
         <div class="about-content">
-            <h3>نبذة عني</h3>
+            <h3>About Me</h3>
             <a href="mailto:abdelkaioum@example.com" class="email">abdelkaioum@example.com</a>
             <p>
-                متخصص تسويق إلكتروني ممتد الخبرة في إدارة وتحسين الميزانيات الإعلانية الرقمية. أركز بشكل أساسي على التحليل المنطقي وقراءة كشوفات البيانات لتحديد الفئات المستهدفة بدقة تضمن تحقيق أعلى معدلات تحويل ومبيعات، مع خفض تكاليف الاستحواذ على العملاء الجدد ومضاعفة العائد الإعلاني.
+                Experienced Digital Marketing Specialist specializing in managing and optimizing performance ad budgets. I leverage logical analysis and data interpretation to define precise target audiences, maximizing conversions and ROAS while keeping Customer Acquisition Costs (CAC) to a minimum.
             </p>
             <div class="location">
-                القاهرة، مصر<br>
-                التجمع الخامس، شركة افتراضية
+                Cairo, Egypt<br>
+                Fifth Settlement
             </div>
         </div>
     </section>
 
-    <!-- لوحة التحكم بالمهارات والخبرات -->
+    <!-- Skills & Experience Dashboard -->
     <section class="dashboard">
         
-        <!-- العمود الأول: المهارات التقنية واللغات -->
+        <!-- Column 1: Advertising Skills & Languages -->
         <div class="dashboard-column">
-            <h4>المهارات الإعلانية</h4>
+            <h4>Advertising Skills</h4>
             
             <div class="skill-item">
-                <div class="skill-info"><span>إعلانات ميتا (Facebook & Instagram Ads)</span><span>95%</span></div>
+                <div class="skill-info"><span>Meta Ads (Facebook & Instagram Ads)</span><span>95%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
             </div>
             
             <div class="skill-item">
-                <div class="skill-info"><span>إعلانات جوجل (Google Search & Display)</span><span>85%</span></div>
+                <div class="skill-info"><span>Google Ads (Search & Display)</span><span>85%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
             </div>
 
             <div class="skill-item">
-                <div class="skill-info"><span>إعلانات تيك توك (TikTok Ads)</span><span>80%</span></div>
+                <div class="skill-info"><span>TikTok Ads</span><span>80%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
             </div>
 
             <div class="skill-item">
-                <div class="skill-info"><span>تحليل البيانات (Google Analytics)</span><span>75%</span></div>
+                <div class="skill-info"><span>Data Analytics (Google Analytics)</span><span>75%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
             </div>
 
-            <h4 style="margin-top: 50px;">اللغات</h4>
+            <h4 style="margin-top: 50px;">Languages</h4>
             <div class="skill-item">
-                <div class="skill-info"><span>العربية (اللغة الأم)</span><span>100%</span></div>
+                <div class="skill-info"><span>Arabic (Native)</span><span>100%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
             </div>
             <div class="skill-item">
-                <div class="skill-info"><span>الإنجليزية</span><span>85%</span></div>
+                <div class="skill-info"><span>English</span><span>85%</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
             </div>
         </div>
 
-        <!-- العمود الثاني: الخبرة العملية والقدرات -->
+        <!-- Column 2: Professional Experience & Value Proposition -->
         <div class="dashboard-column">
-            <h4>الخبرة المهنية</h4>
+            <h4>Professional Experience</h4>
             <ul class="timeline">
                 <li class="timeline-item">
-                    <h5>خبير ميديا بايرنج (Media Buyer)</h5>
-                    <span>2024 - الحالي</span>
-                    <p>إدارة حملات ترويجية ضخمة لشركات تجارة إلكترونية محلية وإقليمية وتحقيق عائد إنفاق إعلاني ممتاز.</p>
+                    <h5>Media Buyer Specialist</h5>
+                    <span>2024 - Present</span>
+                    <p>Managing high-budget ad campaigns for local and regional e-commerce brands, driving exceptional Return on Ad Spend (ROAS).</p>
                 </li>
                 <li class="timeline-item">
-                    <h5>أخصائي تسويق أداء (Performance Marketer)</h5>
+                    <h5>Performance Marketer</h5>
                     <span>2022 - 2024</span>
-                    <p>صياغة استراتيجيات قنوات البيع (Sales Funnels) وبناء صفحات هبوط مخصصة لرفع كفاءة التحويل المباشر لطلبات الشراء.</p>
+                    <p>Designing custom sales funnels and high-converting landing pages to boost direct purchase conversion rates.</p>
                 </li>
             </ul>
 
-            <h4>ماذا يمكنني أن أقدم لمشروعك؟</h4>
+            <h4>What Can I Bring to Your Business?</h4>
             <ul class="text-list">
-                <li><strong>زيادة المبيعات والأرباح:</strong> تحويل الميزانية الإعلانية الراكدة إلى حملات تدر مبيعات فعلية متكررة وبشكل مدروس بالكامل.</li>
-                <li><strong>استهداف الفئة الذهبية:</strong> الوصول الدقيق للجمهور المستعد للشراء الفوري بدلاً من إهدار الميزانيات على نقرات غير مهتمة.</li>
+                <li><strong>Increased Revenue & Sales:</strong> Transforming underperforming ad budgets into data-backed, scalable sales machines.</li>
+                <li><strong>High-Intent Audience Targeting:</strong> Reaching buyers who are ready to take action, minimizing wasted spend on unqualified clicks.</li>
             </ul>
         </div>
 
