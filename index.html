@@ -143,13 +143,27 @@
         .section-header {
             text-align: center;
             max-width: 750px;
-            margin: 0 auto 50px auto;
+            margin: 0 auto 40px auto;
+        }
+
+        .framework-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(56, 189, 248, 0.08);
+            padding: 5px 18px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
         }
 
         .section-header h2 {
-            font-size: 2.3rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -208,7 +222,7 @@
         .btn-outline.active { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(56, 189, 248, 0.08); }
         .btn-outline.active:hover { background-color: var(--accent-blue); color: var(--bg-deep); }
 
-        /* Section 2: NEW About Me Section (Exact Image Layout) */
+        /* Section 2: About Me Section */
         .about {
             padding: 100px 8%;
             background: var(--bg-surface);
@@ -243,9 +257,7 @@
             margin-bottom: 25px;
         }
 
-        .about-email:hover {
-            text-decoration: underline;
-        }
+        .about-email:hover { text-decoration: underline; }
 
         .about-p-text {
             color: var(--text-secondary);
@@ -287,7 +299,6 @@
             padding-left: 14px;
         }
 
-        /* Right Column Feature Cards */
         .about-right {
             display: flex;
             flex-direction: column;
@@ -339,114 +350,99 @@
             font-size: 0.86rem;
         }
 
-        /* Section 3: Interactive Strategy Pipeline Canvas */
+        /* Section 3: NEW Canvas Framework Layout (Exact Image Match) */
         .canvas-section {
             padding: 100px 8%;
             position: relative;
         }
 
-        .pipeline-flow {
-            display: flex;
-            align-items: stretch;
-            justify-content: space-between;
-            gap: 12px;
-            position: relative;
-            margin-top: 40px;
-        }
-
-        .flow-step {
-            flex: 1;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(16px);
+        .canvas-card-container {
+            background: rgba(15, 23, 42, 0.4);
             border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 35px 25px;
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
             position: relative;
             overflow: hidden;
+            margin-top: 35px;
+        }
+
+        /* Connecting horizontal line running across all 3 icons */
+        .timeline-line {
+            position: absolute;
+            top: 68px;
+            left: 12%;
+            right: 12%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.4) 0%, rgba(129, 140, 248, 0.4) 50%, rgba(52, 211, 153, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            position: relative;
+            z-index: 2;
+        }
+
+        .canvas-col {
+            padding: 45px 35px 40px 35px;
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            border-right: 1px solid var(--border-glass);
         }
 
-        .flow-step:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-blue);
-            background: rgba(15, 23, 42, 0.7);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        .canvas-col:last-child {
+            border-right: none;
         }
 
-        .step-number {
-            position: absolute;
-            top: -15px;
-            right: 15px;
-            font-size: 5rem;
-            font-weight: 900;
-            opacity: 0.05;
-            color: var(--text-primary);
-            pointer-events: none;
-            line-height: 1;
-            font-family: sans-serif;
-        }
-
-        .step-badge {
-            display: inline-block;
-            align-self: flex-start;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            padding: 5px 14px;
-            border-radius: 30px;
-            margin-bottom: 20px;
-        }
-
-        .stage-1 .step-badge { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.25); }
-        .stage-2 .step-badge { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.25); }
-        .stage-3 .step-badge { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.25); }
-
-        .step-icon {
+        .col-icon-box {
             width: 48px;
             height: 48px;
-            border-radius: 14px;
+            border-radius: 12px;
+            background: #0b111e;
+            border: 1px solid var(--border-glass);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
+            font-size: 1.15rem;
+            margin-bottom: 28px;
+            z-index: 2;
+            position: relative;
         }
 
-        .stage-1 .step-icon { background: rgba(56, 189, 248, 0.1); color: var(--accent-blue); }
-        .stage-2 .step-icon { background: rgba(129, 140, 248, 0.1); color: var(--accent-indigo); }
-        .stage-3 .step-icon { background: rgba(52, 211, 153, 0.1); color: var(--accent-emerald); }
+        .col-icon-box.stage-1 { color: var(--accent-blue); border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 0 15px rgba(56, 189, 248, 0.15); }
+        .col-icon-box.stage-2 { color: var(--accent-indigo); border-color: rgba(129, 140, 248, 0.3); box-shadow: 0 0 15px rgba(129, 140, 248, 0.15); }
+        .col-icon-box.stage-3 { color: var(--accent-emerald); border-color: rgba(52, 211, 153, 0.3); box-shadow: 0 0 15px rgba(52, 211, 153, 0.15); }
 
-        .flow-step h3 {
-            font-size: 1.25rem;
+        .col-badge {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .col-badge.stage-1 { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.25); }
+        .col-badge.stage-2 { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.25); }
+        .col-badge.stage-3 { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.25); }
+
+        .canvas-col h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 12px;
-            font-weight: 700;
+            letter-spacing: -0.3px;
         }
 
-        .flow-step p {
+        .canvas-col p {
             color: var(--text-secondary);
-            font-size: 0.93rem;
-            line-height: 1.65;
-        }
-
-        .flow-connector {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-blue);
-            font-size: 1.2rem;
-            opacity: 0.7;
-            flex-shrink: 0;
-            padding: 0 5px;
-            animation: pulseArrow 2s infinite ease-in-out;
-        }
-
-        @keyframes pulseArrow {
-            0%, 100% { transform: translateX(0); opacity: 0.4; }
-            50% { transform: translateX(6px); opacity: 1; }
+            font-size: 0.92rem;
+            line-height: 1.7;
         }
 
         /* Section 4: Services Offered & Expertise Badges */
@@ -681,12 +677,10 @@
 
         @media (max-width: 992px) {
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .pipeline-flow { flex-direction: column; gap: 15px; }
-            .flow-connector { transform: rotate(90deg); margin: 5px 0; }
-            @keyframes pulseArrow {
-                0%, 100% { transform: translateY(0); opacity: 0.4; }
-                50% { transform: translateY(6px); opacity: 1; }
-            }
+            .canvas-grid { grid-template-columns: 1fr; }
+            .canvas-col { border-right: none; border-bottom: 1px solid var(--border-glass); padding: 35px 25px; }
+            .canvas-col:last-child { border-bottom: none; }
+            .timeline-line { display: none; }
             .dashboard { grid-template-columns: 1fr; gap: 40px; }
             .hero { flex-direction: column-reverse; text-align: center; padding-top: 130px; }
             .hero-buttons { justify-content: center; }
@@ -739,11 +733,10 @@
         </div>
     </section>
 
-    <!-- Section 2: NEW About Me Section (Matching Reference Image Perfectly) -->
+    <!-- Section 2: About Me Section -->
     <section class="about reveal" id="about">
         <div class="about-grid">
             
-            <!-- Left Column: Bio & Location -->
             <div class="about-left">
                 <h2>About Me</h2>
                 <a href="mailto:abdlkayomd@gmail.com" class="about-email">
@@ -771,10 +764,7 @@
                 </div>
             </div>
 
-            <!-- Right Column: 3 Strategic Feature Cards -->
             <div class="about-right">
-                
-                <!-- Card 1 -->
                 <div class="feature-card">
                     <div class="feature-icon-box icon-blue">
                         <i class="fa-solid fa-chart-line"></i>
@@ -785,7 +775,6 @@
                     </div>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="feature-card">
                     <div class="feature-icon-box icon-purple">
                         <i class="fa-solid fa-crosshairs"></i>
@@ -796,7 +785,6 @@
                     </div>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="feature-card">
                     <div class="feature-icon-box icon-green">
                         <i class="fa-solid fa-flask"></i>
@@ -806,63 +794,63 @@
                         <p>Continuous A/B optimization</p>
                     </div>
                 </div>
-
             </div>
 
         </div>
     </section>
 
-    <!-- Section 3: Interactive Strategy Pipeline Canvas -->
+    <!-- Section 3: NEW Canvas Framework Section (Exact Layout matching reference image) -->
     <section class="canvas-section reveal" id="strategy">
         <div class="section-header">
+            <span class="framework-badge">FRAMEWORK</span>
             <h2>My Strategic Growth Canvas</h2>
             <p>
-                Most businesses waste budgets on random ad launches without a clear blueprint. As a strategic marketer, I believe a successful ad is simply the result of an integrated marketing process flow:
+                A successful campaign is never random. Every project follows this proven 3-stage funnel blueprint that turns cold audiences into loyal, high-value customers:
             </p>
         </div>
 
-        <div class="pipeline-flow">
-            <!-- Step 01 -->
-            <div class="flow-step stage-1">
-                <div class="step-number">01</div>
-                <div class="step-badge">Stage 01 • BEFORE</div>
-                <div class="step-icon"><i class="fa-solid fa-bullseye"></i></div>
-                <h3>Attraction & Messaging</h3>
-                <p>
-                    Pinpointing your ideal target audience with precise demographic profiling and crafting a unique marketing message that directly touches their core pain points.
-                </p>
-            </div>
+        <div class="canvas-card-container">
+            <!-- Continuous Timeline Line -->
+            <div class="timeline-line"></div>
 
-            <!-- Arrow Connector 1 -->
-            <div class="flow-connector">
-                <i class="fa-solid fa-chevron-right"></i>
-            </div>
+            <div class="canvas-grid">
+                
+                <!-- Stage 01: TOFU -->
+                <div class="canvas-col">
+                    <div class="col-icon-box stage-1">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <span class="col-badge stage-1">STAGE 01 • BEFORE (TOFU)</span>
+                    <h3>Top of Funnel • Prospects</h3>
+                    <p>
+                        Pinpointing your ideal target market with precise demographic profiling, capturing immediate attention, crafting an irresistible Unique Selling Proposition (USP), and maximizing multi-channel reach.
+                    </p>
+                </div>
 
-            <!-- Step 02 -->
-            <div class="flow-step stage-2">
-                <div class="step-number">02</div>
-                <div class="step-badge">Stage 02 • DURING</div>
-                <div class="step-icon"><i class="fa-solid fa-rocket"></i></div>
-                <h3>Precision Meta Campaigns</h3>
-                <p>
-                    Launching high-converting ad campaigns across Meta platforms designed to intelligently gather leads, drive high-intent traffic, and scale purchases.
-                </p>
-            </div>
+                <!-- Stage 02: MOFU -->
+                <div class="canvas-col">
+                    <div class="col-icon-box stage-2">
+                        <i class="fa-solid fa-rectangle-ad"></i>
+                    </div>
+                    <span class="col-badge stage-2">STAGE 02 • DURING (MOFU)</span>
+                    <h3>Middle of Funnel • Leads</h3>
+                    <p>
+                        Capturing high-intent lead data (Lead Capture), nurturing prospects through value-driven content, establishing complete market authority, and building deep brand trust.
+                    </p>
+                </div>
 
-            <!-- Arrow Connector 2 -->
-            <div class="flow-connector">
-                <i class="fa-solid fa-chevron-right"></i>
-            </div>
+                <!-- Stage 03: BOFU -->
+                <div class="canvas-col">
+                    <div class="col-icon-box stage-3">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <span class="col-badge stage-3">STAGE 03 • AFTER (BOFU)</span>
+                    <h3>Bottom of Funnel • Customers</h3>
+                    <p>
+                        Closing high-ticket sales with irresistible offers, delivering an unforgettable customer experience, expanding Customer Lifetime Value (LTV), and driving continuous repeat referrals.
+                    </p>
+                </div>
 
-            <!-- Step 03 -->
-            <div class="flow-step stage-3">
-                <div class="step-number">03</div>
-                <div class="step-badge">Stage 03 • AFTER</div>
-                <div class="step-icon"><i class="fa-solid fa-rotate-right"></i></div>
-                <h3>Retention & LTV Expansion</h3>
-                <p>
-                    Building long-term customer trust to turn first-time buyers into repeat clients, continuously boosting overall Customer Lifetime Value (LTV).
-                </p>
             </div>
         </div>
     </section>
@@ -914,7 +902,6 @@
 
         <div class="tools-layout">
             
-            <!-- Category 1: Paid Advertising Platforms -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-rectangle-ad"></i>
@@ -940,7 +927,6 @@
                 </div>
             </div>
 
-            <!-- Category 2: Market Research & Intelligence -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-magnifying-glass-chart"></i>
@@ -966,7 +952,6 @@
                 </div>
             </div>
 
-            <!-- Category 3: AI Deep Research Tools -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-brain"></i>
@@ -992,7 +977,6 @@
                 </div>
             </div>
 
-            <!-- Category 4: Analytics & Tracking -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-chart-column"></i>
@@ -1014,7 +998,6 @@
                 </div>
             </div>
 
-            <!-- Category 5: Data & Office Software -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-table"></i>
@@ -1036,7 +1019,6 @@
                 </div>
             </div>
 
-            <!-- Category 6: Web & Store Infrastructure -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-laptop-code"></i>
