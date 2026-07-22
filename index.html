@@ -223,38 +223,58 @@
         .about-content p { color: var(--text-secondary); font-size: 1.08rem; line-height: 1.8; margin-bottom: 25px; }
         .location { color: var(--text-secondary); font-size: 0.9rem; border-left: 2px solid var(--accent-blue); padding-left: 15px; }
 
-        /* Section 3: Interactive Strategy Pipeline Canvas */
+        /* Section 3: NEW Interactive Sequential Strategy Pipeline Flow */
         .canvas-section {
             padding: 100px 8%;
             position: relative;
         }
 
-        .pipeline-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+        .pipeline-flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            gap: 12px;
             position: relative;
-            margin-bottom: 40px;
+            margin-top: 40px;
         }
 
-        .pipeline-card {
-            background: var(--bg-glass);
+        .flow-step {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 35px 25px;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
-        .pipeline-card:hover {
+        .flow-step:hover {
             transform: translateY(-8px);
             border-color: var(--accent-blue);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .card-stage-badge {
+        .step-number {
+            position: absolute;
+            top: -15px;
+            right: 15px;
+            font-size: 5rem;
+            font-weight: 900;
+            opacity: 0.05;
+            color: var(--text-primary);
+            pointer-events: none;
+            line-height: 1;
+            font-family: sans-serif;
+        }
+
+        .step-badge {
             display: inline-block;
+            align-self: flex-start;
             font-size: 0.72rem;
             font-weight: 800;
             letter-spacing: 1.2px;
@@ -264,24 +284,56 @@
             margin-bottom: 20px;
         }
 
-        .stage-1 .card-stage-badge { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.25); }
-        .stage-2 .card-stage-badge { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.25); }
-        .stage-3 .card-stage-badge { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.25); }
+        .stage-1 .step-badge { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.25); }
+        .stage-2 .step-badge { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.25); }
+        .stage-3 .step-badge { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.25); }
 
-        .pipeline-card h3 {
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .stage-1 .step-icon { background: rgba(56, 189, 248, 0.1); color: var(--accent-blue); }
+        .stage-2 .step-icon { background: rgba(129, 140, 248, 0.1); color: var(--accent-indigo); }
+        .stage-3 .step-icon { background: rgba(52, 211, 153, 0.1); color: var(--accent-emerald); }
+
+        .flow-step h3 {
+            font-size: 1.25rem;
             color: var(--text-primary);
             margin-bottom: 12px;
             font-weight: 700;
         }
 
-        .pipeline-card p {
+        .flow-step p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            font-size: 0.93rem;
+            line-height: 1.65;
         }
 
-        /* Section 4: Services & Expertise Badges */
+        .flow-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            opacity: 0.7;
+            flex-shrink: 0;
+            padding: 0 5px;
+            animation: pulseArrow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseArrow {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(6px); opacity: 1; }
+        }
+
+        /* Section 4: Services Offered & Expertise Badges */
         .services-section {
             padding: 90px 8%;
             background: var(--bg-surface);
@@ -354,7 +406,7 @@
             line-height: 1.65;
         }
 
-        /* Section 5: NEW Modern Tools & Tech Stack (Sleek Modern Layout) */
+        /* Section 5: Tools & Tech Stack */
         .tools-section {
             padding: 100px 8%;
             position: relative;
@@ -512,7 +564,18 @@
         footer { padding: 30px 8%; background-color: var(--bg-deep); border-top: 1px solid var(--border-glass); text-align: center; color: var(--text-secondary); font-size: 0.88rem; }
 
         @media (max-width: 992px) {
-            .pipeline-container { grid-template-columns: 1fr; }
+            .pipeline-flow {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .flow-connector {
+                transform: rotate(90deg);
+                margin: 5px 0;
+            }
+            @keyframes pulseArrow {
+                0%, 100% { transform: translateY(0); opacity: 0.4; }
+                50% { transform: translateY(6px); opacity: 1; }
+            }
             .dashboard { grid-template-columns: 1fr; gap: 40px; }
             .hero { flex-direction: column-reverse; text-align: center; padding-top: 130px; }
             .hero-buttons { justify-content: center; }
@@ -579,34 +642,53 @@
         </div>
     </section>
 
-    <!-- Section 3: Strategy Pipeline Canvas -->
+    <!-- Section 3: NEW Interactive Sequential Strategy Pipeline Flow -->
     <section class="canvas-section reveal" id="strategy">
         <div class="section-header">
             <h2>My Strategic Growth Canvas</h2>
             <p>
-                Most businesses waste budgets on random ad launches without a clear blueprint. As a strategic marketer, I believe a successful ad is simply the result of an integrated marketing system:
+                Most businesses waste budgets on random ad launches without a clear blueprint. As a strategic marketer, I believe a successful ad is simply the result of an integrated marketing process flow:
             </p>
         </div>
 
-        <div class="pipeline-container">
-            <div class="pipeline-card stage-1">
-                <span class="card-stage-badge">Stage 01 • BEFORE</span>
+        <div class="pipeline-flow">
+            <!-- Step 01 -->
+            <div class="flow-step stage-1">
+                <div class="step-number">01</div>
+                <div class="step-badge">Stage 01 • BEFORE</div>
+                <div class="step-icon"><i class="fa-solid fa-bullseye"></i></div>
                 <h3>Attraction & Messaging</h3>
                 <p>
                     Pinpointing your ideal target audience with precise demographic profiling and crafting a unique marketing message that directly touches their core pain points.
                 </p>
             </div>
 
-            <div class="pipeline-card stage-2">
-                <span class="card-stage-badge">Stage 02 • DURING</span>
+            <!-- Arrow Connector 1 -->
+            <div class="flow-connector">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <!-- Step 02 -->
+            <div class="flow-step stage-2">
+                <div class="step-number">02</div>
+                <div class="step-badge">Stage 02 • DURING</div>
+                <div class="step-icon"><i class="fa-solid fa-rocket"></i></div>
                 <h3>Precision Meta Campaigns</h3>
                 <p>
                     Launching high-converting ad campaigns across Meta platforms designed to intelligently gather leads, drive high-intent traffic, and scale purchases.
                 </p>
             </div>
 
-            <div class="pipeline-card stage-3">
-                <span class="card-stage-badge">Stage 03 • AFTER</span>
+            <!-- Arrow Connector 2 -->
+            <div class="flow-connector">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+
+            <!-- Step 03 -->
+            <div class="flow-step stage-3">
+                <div class="step-number">03</div>
+                <div class="step-badge">Stage 03 • AFTER</div>
+                <div class="step-icon"><i class="fa-solid fa-rotate-right"></i></div>
                 <h3>Retention & LTV Expansion</h3>
                 <p>
                     Building long-term customer trust to turn first-time buyers into repeat clients, continuously boosting overall Customer Lifetime Value (LTV).
@@ -653,7 +735,7 @@
         </div>
     </section>
 
-    <!-- Section 5: NEW Tools & Tech Stack (Official Brand Logos & Sleek Modern UI) -->
+    <!-- Section 5: Tools & Tech Stack -->
     <section class="tools-section reveal" id="tools">
         <div class="section-header">
             <h2>Tools & Tech Stack</h2>
@@ -670,22 +752,18 @@
                 </div>
                 <div class="brand-pills-container">
                     <span class="brand-pill">
-                        <!-- Official Meta Logo -->
                         <svg viewBox="0 0 24 24" fill="#0668E1"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         Meta Ads Manager
                     </span>
                     <span class="brand-pill">
-                        <!-- Official Google Logo -->
                         <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.15C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.99-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.72-4.96z"/></svg>
                         Google Ads
                     </span>
                     <span class="brand-pill">
-                        <!-- Official TikTok Logo -->
                         <svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.31 1.56-1.24 2.56.03.74.4 1.46.99 1.89.89.65 2.11.75 3.08.26.89-.43 1.52-1.31 1.61-2.29.04-2.88.01-5.76.02-8.64-.01-3.65-.01-7.3-.01-10.95z"/></svg>
                         TikTok Ads
                     </span>
                     <span class="brand-pill">
-                        <!-- Official Snapchat Logo -->
                         <svg viewBox="0 0 24 24" fill="#FFFC00"><path d="M12 2.163c-3.23 0-5.85 2.619-5.85 5.849 0 2.379 1.395 4.382 3.405 5.279-.24.781-.9 1.411-1.74 1.742-.72.299-1.53.18-2.19-.3-.33-.24-.78-.21-1.08.06-.33.3-.36.81-.09 1.17.9.99 2.19 1.53 3.51 1.53 1.23 0 2.43-.48 3.33-1.35.9.87 2.1 1.35 3.33 1.35 1.32 0 2.61-.54 3.51-1.53.27-.36.24-.87-.09-1.17-.3-.27-.75-.3-1.08-.06-.66.48-1.47.6-2.19.3-.84-.331-1.5-.961-1.74-1.742 2.01-.897 3.405-2.9 3.405-5.279 0-3.23-2.62-5.849-5.85-5.849z"/></svg>
                         Snapchat Ads
                     </span>
@@ -700,29 +778,25 @@
                 </div>
                 <div class="brand-pills-container">
                     <span class="brand-pill">
-                        <!-- Google Trends -->
                         <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
                         Google Trends
                     </span>
                     <span class="brand-pill">
-                        <!-- Meta Ad Library -->
                         <svg viewBox="0 0 24 24" fill="#0668E1"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                         Meta Ad Library
                     </span>
                     <span class="brand-pill">
-                        <!-- TikTok Creative Center -->
                         <svg viewBox="0 0 24 24" fill="#25F4EE"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
                         TikTok Creative Center
                     </span>
                     <span class="brand-pill">
-                        <!-- Similarweb -->
                         <svg viewBox="0 0 24 24" fill="#002147"><path fill="#3b82f6" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                         Similarweb
                     </span>
                 </div>
             </div>
 
-            <!-- Category 3: AI Deep Research Tools (Official Logos) -->
+            <!-- Category 3: AI Deep Research Tools -->
             <div class="tools-category-card">
                 <div class="category-header">
                     <i class="fa-solid fa-brain"></i>
@@ -730,22 +804,18 @@
                 </div>
                 <div class="brand-pills-container">
                     <span class="brand-pill">
-                        <!-- Perplexity AI Official Star/Cross SVG -->
                         <svg viewBox="0 0 24 24" fill="#20B2AA"><path d="M12 0L9.17 9.17L0 12l9.17 2.83L12 24l2.83-9.17L24 12l-9.17-2.83z"/></svg>
                         Perplexity AI
                     </span>
                     <span class="brand-pill">
-                        <!-- ChatGPT / OpenAI Official Logo -->
                         <svg viewBox="0 0 24 24" fill="#10A37F"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zM13.2599 22.2104a4.3435 4.3435 0 0 1-2.3831-.7025l.1379-.2393 3.9525-6.8483a.8506.8506 0 0 0-.3107-1.1616.8363.8363 0 0 0-1.1568.3107l-3.5653 6.1763-1.6397-.9465 3.5605-6.1715a.8458.8458 0 0 0-.3107-1.1568.841.841 0 0 0-1.1568.3107l-3.5653 6.1763-1.6397-.9465 3.5605-6.1715a.8458.8458 0 0 0-.3107-1.1568.841.841 0 0 0-1.1568.3107L3.8291 14.4a4.3387 4.3387 0 0 1 1.3433-5.2632l.2393-.1379 6.8483 3.9525a.8506.8506 0 0 0 1.1616-.3107.8363.8363 0 0 0-.3107-1.1568L6.9344 7.5186l.9465-1.6397 6.1715 3.5605a.8458.8458 0 0 0 1.1568-.3107.841.841 0 0 0-.3107-1.1568L8.727 4.4114l.9465-1.6397 6.1715 3.5605a.8458.8458 0 0 0 1.1568-.3107.841.841 0 0 0-.3107-1.1568l-3.0881-1.7831a4.3387 4.3387 0 0 1 5.2632 1.3433l.1379.2393-3.9525 6.8483a.8506.8506 0 0 0 .3107 1.1616.8363.8363 0 0 0 1.1568-.3107l3.5653-6.1763 1.6397.9465-3.5605 6.1715a.8458.8458 0 0 0 .3107 1.1568.841.841 0 0 0 1.1568-.3107l3.5653-6.1763 1.6397.9465-3.5605 6.1715a.8458.8458 0 0 0 .3107 1.1568.841.841 0 0 0 1.1568-.3107l3.0881 1.7831a4.3387 4.3387 0 0 1-1.3433 5.2632l-.2393.1379-6.8483-3.9525a.8506.8506 0 0 0-1.1616.3107.8363.8363 0 0 0 .3107 1.1568l6.1763 3.5653-.9465 1.6397-6.1715-3.5605a.8458.8458 0 0 0-1.1568.3107.841.841 0 0 0 .3107 1.1568l6.1763 3.5653-.9465 1.6397-6.1715-3.5605a.8458.8458 0 0 0-1.1568.3107.841.841 0 0 0 .3107 1.1568z"/></svg>
                         ChatGPT Plus
                     </span>
                     <span class="brand-pill">
-                        <!-- Anthropic Claude Official Logo -->
                         <svg viewBox="0 0 24 24" fill="#D97706"><path d="M4.5 3A1.5 1.5 0 0 0 3 4.5v15A1.5 1.5 0 0 0 4.5 21h15a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 19.5 3h-15zM8 7.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H8a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5z"/></svg>
                         Claude AI
                     </span>
                     <span class="brand-pill">
-                        <!-- Google Gemini Spark Logo -->
                         <svg viewBox="0 0 24 24"><path fill="#8E75FF" d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/></svg>
                         Google Gemini
                     </span>
@@ -760,17 +830,14 @@
                 </div>
                 <div class="brand-pills-container">
                     <span class="brand-pill">
-                        <!-- Google Analytics GA4 -->
                         <svg viewBox="0 0 24 24"><path fill="#E37400" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-5h2v5zm4 0h-2V7h2v10zm4 0h-2v-8h2v8z"/></svg>
                         Google Analytics 4 (GA4)
                     </span>
                     <span class="brand-pill">
-                        <!-- Google Tag Manager -->
                         <svg viewBox="0 0 24 24" fill="#246FDB"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         Google Tag Manager
                     </span>
                     <span class="brand-pill">
-                        <!-- Meta Pixel & CAPI -->
                         <svg viewBox="0 0 24 24" fill="#0668E1"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
                         Meta Pixel & CAPI
                     </span>
@@ -785,17 +852,14 @@
                 </div>
                 <div class="brand-pills-container">
                     <span class="brand-pill">
-                        <!-- MS Excel Logo -->
                         <svg viewBox="0 0 24 24" fill="#107C41"><path d="M21.17 3H7.83A1.83 1.83 0 0 0 6 4.83v14.34A1.83 1.83 0 0 0 7.83 21h13.34A1.83 1.83 0 0 0 23 19.17V4.83A1.83 1.83 0 0 0 21.17 3zM1 18l4-6-4-6h3l2.5 4L9 6h3L8 12l4 6H9l-2.5-4L4 18H1z"/></svg>
                         Advanced MS Excel
                     </span>
                     <span class="brand-pill">
-                        <!-- Google Sheets Logo -->
                         <svg viewBox="0 0 24 24" fill="#0F9D58"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
                         Google Sheets
                     </span>
                     <span class="brand-pill">
-                        <!-- Office Operations -->
                         <svg viewBox="0 0 24 24" fill="#38bdf8"><path d="M4 6h16v10H4zm16 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2zm-8 1h4v2h-4z"/></svg>
                         Office Operations
                     </span>
@@ -810,17 +874,14 @@
                 </div>
                 <div class="brand-pills-container">
                     <span class="brand-pill">
-                        <!-- Shopify Official Logo -->
                         <svg viewBox="0 0 24 24" fill="#95BF47"><path d="M15.3 3.6c-.1 0-.2.1-.2.2l-.7 3.3c-.5-.1-1-.2-1.5-.2-2.8 0-4.9 2-4.9 4.8 0 2.5 1.7 4.2 4.1 4.2 2.6 0 4.6-1.8 4.6-4.6 0-.3 0-.6-.1-.9l1.4-2.8c.1-.2 0-.4-.2-.5l-2.5-1.5zm-3.1 9.8c-1.3 0-2.3-1-2.3-2.3 0-1.5 1.1-2.6 2.6-2.6.3 0 .7.1 1 .2l-1.3 4.7c-.3 0-.7 0-1 0z"/></svg>
                         Shopify
                     </span>
                     <span class="brand-pill">
-                        <!-- VS Code Official Logo -->
                         <svg viewBox="0 0 24 24" fill="#007ACC"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.276a1 1 0 0 0 0 1.448l3.163 2.924L.327 14.572a1 1 0 0 0 0 1.448l1.322 1.217a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 19.348V4.252a1.5 1.5 0 0 0-.85-1.665z"/></svg>
                         VS Code
                     </span>
                     <span class="brand-pill">
-                        <!-- HTML5 Shield Logo -->
                         <svg viewBox="0 0 24 24" fill="#E34F26"><path d="M1.5 0h21l-1.91 21.563L11.97 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.625 10.267.014.234-2.639H5.406l.69 7.75h8.61l-.367 4.125-2.369.641-2.38-.642-.152-1.719H7.062l.302 3.404 4.606 1.278 4.61-1.278.63-7.063H8.531z"/></svg>
                         HTML5 / CSS3
                     </span>
