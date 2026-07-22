@@ -64,76 +64,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Fixed Navigation Header (Without menu links) */
-        header.top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(8, 12, 20, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-glass);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 6%;
-        }
-
-        .brand-logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-            text-decoration: none;
-        }
-
-        .brand-logo span {
-            color: var(--accent-blue);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .phone-number {
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-            font-weight: 600;
-        }
-
-        .nav-socials {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            border-left: 1px solid var(--border-glass);
-            padding-left: 15px;
-        }
-
-        .nav-socials a {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-        }
-
-        .nav-socials a:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-socials a:hover .icon-instagram { color: #E4405F; }
-        .nav-socials a:hover .icon-facebook { color: #1877F2; }
-
         /* Section Header Styling */
         .section-header {
             text-align: center;
@@ -177,7 +107,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 140px 8% 60px 8%;
+            padding: 80px 8% 60px 8%;
             gap: 40px;
         }
 
@@ -715,8 +645,49 @@
         .card-info h3 { color: var(--text-primary); font-size: 1rem; font-weight: 700; }
         .card-info span { color: var(--text-secondary); font-size: 0.83rem; }
 
-        /* Footer */
-        footer { padding: 30px 8%; background-color: var(--bg-deep); border-top: 1px solid var(--border-glass); text-align: center; color: var(--text-secondary); font-size: 0.88rem; }
+        /* Footer & Social Links */
+        footer { 
+            padding: 40px 8%; 
+            background-color: var(--bg-deep); 
+            border-top: 1px solid var(--border-glass); 
+            text-align: center; 
+            color: var(--text-secondary); 
+            font-size: 0.88rem; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-socials a:hover .icon-instagram { color: #E4405F; }
+        .footer-socials a:hover .icon-facebook { color: #1877F2; }
 
         @media (max-width: 992px) {
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -725,35 +696,17 @@
             .canvas-col:last-child { border-bottom: none; }
             .timeline-line { display: none; }
             .dashboard { grid-template-columns: 1fr; gap: 40px; }
-            .hero { flex-direction: column-reverse; text-align: center; padding-top: 130px; }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 60px; }
             .hero-text .hero-name { justify-content: center; font-size: 1.8rem; }
             .hero-text .hero-name::before { display: none; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-buttons { justify-content: center; }
-            header.top-bar .phone-number { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fixed Header Top Bar (Without Navigation Links) -->
-    <header class="top-bar">
-        <a href="#home" class="brand-logo">Abdelkaioum <span>Beldjoudi</span></a>
-        
-        <div class="nav-right">
-            <div class="phone-number">+20 112 911 4212</div>
-            <div class="nav-socials">
-                <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
-                    <i class="fa-brands fa-instagram icon-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" aria-label="Facebook">
-                    <i class="fa-brands fa-facebook icon-facebook"></i>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Section 1: Hero Section (Enlarged Name & Clean Layout) -->
+    <!-- Section 1: Hero Section (Clean Layout) -->
     <section class="hero reveal" id="home">
         <div class="hero-text">
             <div class="hero-name">Abdelkaioum Beldjoudi</div>
@@ -1185,8 +1138,16 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer with Social Media Links -->
     <footer>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
+                <i class="fa-brands fa-instagram icon-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" aria-label="Facebook">
+                <i class="fa-brands fa-facebook icon-facebook"></i>
+            </a>
+        </div>
         <p>© 2026 Abdelkaioum Beldjoudi. All rights reserved.</p>
     </footer>
 
