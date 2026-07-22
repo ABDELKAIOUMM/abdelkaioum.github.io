@@ -208,22 +208,138 @@
         .btn-outline.active { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(56, 189, 248, 0.08); }
         .btn-outline.active:hover { background-color: var(--accent-blue); color: var(--bg-deep); }
 
-        /* Section 2: About Me Section */
+        /* Section 2: NEW About Me Section (Exact Image Layout) */
         .about {
-            padding: 90px 8%;
+            padding: 100px 8%;
             background: var(--bg-surface);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--border-glass);
             border-bottom: 1px solid var(--border-glass);
         }
 
-        .about-content { max-width: 750px; }
-        .about-content h3 { font-size: 2rem; color: var(--text-primary); margin-bottom: 10px; font-weight: 800; }
-        .about-content .email { color: var(--accent-blue); text-decoration: none; display: inline-block; margin-bottom: 20px; font-weight: 600; }
-        .about-content p { color: var(--text-secondary); font-size: 1.08rem; line-height: 1.8; margin-bottom: 25px; }
-        .location { color: var(--text-secondary); font-size: 0.9rem; border-left: 2px solid var(--accent-blue); padding-left: 15px; }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
 
-        /* Section 3: NEW Interactive Sequential Strategy Pipeline Flow */
+        .about-left h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .about-email:hover {
+            text-decoration: underline;
+        }
+
+        .about-p-text {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+
+        .about-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .about-pill {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: #cbd5e1;
+            padding: 7px 18px;
+            border-radius: 30px;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .about-pill:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .about-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 14px;
+        }
+
+        /* Right Column Feature Cards */
+        .about-right {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .feature-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(6px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .icon-blue { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); }
+        .icon-purple { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); }
+        .icon-green { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); }
+
+        .feature-info h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .feature-info p {
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+        }
+
+        /* Section 3: Interactive Strategy Pipeline Canvas */
         .canvas-section {
             padding: 100px 8%;
             position: relative;
@@ -564,14 +680,9 @@
         footer { padding: 30px 8%; background-color: var(--bg-deep); border-top: 1px solid var(--border-glass); text-align: center; color: var(--text-secondary); font-size: 0.88rem; }
 
         @media (max-width: 992px) {
-            .pipeline-flow {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .flow-connector {
-                transform: rotate(90deg);
-                margin: 5px 0;
-            }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .pipeline-flow { flex-direction: column; gap: 15px; }
+            .flow-connector { transform: rotate(90deg); margin: 5px 0; }
             @keyframes pulseArrow {
                 0%, 100% { transform: translateY(0); opacity: 0.4; }
                 50% { transform: translateY(6px); opacity: 1; }
@@ -628,21 +739,80 @@
         </div>
     </section>
 
-    <!-- Section 2: About Me Section -->
+    <!-- Section 2: NEW About Me Section (Matching Reference Image Perfectly) -->
     <section class="about reveal" id="about">
-        <div class="about-content">
-            <h3>About Me</h3>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abdlkayomd@gmail.com" target="_blank" class="email">abdlkayomd@gmail.com</a>
-            <p>
-                Experienced Performance Marketer and Media Buyer specializing in managing ad budgets with mathematical precision. I leverage strategic market research and audience segmentation to drive reliable business growth, maximize ROAS, and eliminate wasted ad spend.
-            </p>
-            <div class="location">
-                Cairo, Egypt • Fifth Settlement
+        <div class="about-grid">
+            
+            <!-- Left Column: Bio & Location -->
+            <div class="about-left">
+                <h2>About Me</h2>
+                <a href="mailto:abdlkayomd@gmail.com" class="about-email">
+                    <i class="fa-solid fa-envelope"></i> abdlkayomd@gmail.com
+                </a>
+                
+                <p class="about-p-text">
+                    Experienced Performance Marketer and Media Buyer specializing in managing ad budgets with mathematical precision. I leverage strategic market research and advanced audience segmentation to drive reliable business growth.
+                </p>
+
+                <p class="about-p-text">
+                    My approach eliminates guesswork — every campaign is built on data, tested rigorously, and scaled only when proven to deliver results.
+                </p>
+
+                <div class="about-pills">
+                    <span class="about-pill">Performance Marketing</span>
+                    <span class="about-pill">Media Buying</span>
+                    <span class="about-pill">Market Research</span>
+                    <span class="about-pill">Data Analytics</span>
+                    <span class="about-pill">Funnel Optimization</span>
+                </div>
+
+                <div class="about-location">
+                    <i class="fa-solid fa-location-dot"></i> Cairo, Egypt • Fifth Settlement
+                </div>
             </div>
+
+            <!-- Right Column: 3 Strategic Feature Cards -->
+            <div class="about-right">
+                
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box icon-blue">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h4>ROAS–Focused</h4>
+                        <p>Every decision tied to ROI</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box icon-purple">
+                        <i class="fa-solid fa-crosshairs"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h4>Precision Targeting</h4>
+                        <p>Right audience, right message</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box icon-green">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h4>Data–Driven Testing</h4>
+                        <p>Continuous A/B optimization</p>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section>
 
-    <!-- Section 3: NEW Interactive Sequential Strategy Pipeline Flow -->
+    <!-- Section 3: Interactive Strategy Pipeline Canvas -->
     <section class="canvas-section reveal" id="strategy">
         <div class="section-header">
             <h2>My Strategic Growth Canvas</h2>
