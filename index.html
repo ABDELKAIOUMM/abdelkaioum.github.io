@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -64,13 +64,13 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Fixed Navigation Bar */
-        nav {
+        /* Fixed Navigation Header (Without menu links) */
+        header.top-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(8, 12, 20, 0.8);
+            background: rgba(8, 12, 20, 0.85);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-glass);
             z-index: 1000;
@@ -80,32 +80,27 @@
             padding: 18px 6%;
         }
 
-        nav .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        nav .nav-links a {
-            color: var(--text-secondary);
+        .brand-logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.88rem;
         }
 
-        nav .nav-links a:hover, nav .nav-links a.active {
+        .brand-logo span {
             color: var(--accent-blue);
         }
 
-        nav .nav-right {
+        .nav-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        nav .phone-number {
+        .phone-number {
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 600;
         }
 
@@ -124,8 +119,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: var(--bg-glass);
             border: 1px solid var(--border-glass);
@@ -176,42 +171,45 @@
             line-height: 1.7;
         }
 
-        /* Section 1: Hero Section (UPDATED) */
+        /* Section 1: Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 130px 8% 60px 8%;
+            padding: 140px 8% 60px 8%;
             gap: 40px;
         }
 
         .hero-text { flex: 1; }
         
+        /* Enlarged Name Styling */
         .hero-text .hero-name {
-            font-size: 1.1rem;
+            font-size: 2.2rem;
             color: var(--accent-blue);
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-weight: 900;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            line-height: 1.1;
         }
 
         .hero-text .hero-name::before {
             content: '';
-            width: 25px;
-            height: 2px;
+            width: 35px;
+            height: 3px;
             background: var(--accent-blue);
+            border-radius: 2px;
         }
 
         .hero-text h1 { 
-            font-size: 3.4rem; 
+            font-size: 3.2rem; 
             font-weight: 900; 
             line-height: 1.15; 
-            margin-bottom: 12px; 
+            margin-bottom: 14px; 
             letter-spacing: -1px;
             background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
@@ -220,13 +218,13 @@
 
         .hero-text .hero-subtitle { 
             color: var(--accent-indigo); 
-            font-size: 1.3rem; 
+            font-size: 1.25rem; 
             font-weight: 700; 
-            margin-bottom: 22px; 
+            margin-bottom: 24px; 
             display: inline-block;
             background: rgba(129, 140, 248, 0.08);
             border: 1px solid rgba(129, 140, 248, 0.25);
-            padding: 6px 18px;
+            padding: 6px 20px;
             border-radius: 30px;
         }
 
@@ -243,7 +241,7 @@
         .hero-image { display: flex; justify-content: center; align-items: center; flex: 1; }
         .hero-image img {
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             height: auto;
             filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
             animation: floatImage 4s ease-in-out infinite;
@@ -257,11 +255,11 @@
         .btn-outline {
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-primary);
-            padding: 11px 30px;
+            padding: 12px 32px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
         }
@@ -728,27 +726,19 @@
             .timeline-line { display: none; }
             .dashboard { grid-template-columns: 1fr; gap: 40px; }
             .hero { flex-direction: column-reverse; text-align: center; padding-top: 130px; }
-            .hero-text .hero-name { justify-content: center; }
+            .hero-text .hero-name { justify-content: center; font-size: 1.8rem; }
             .hero-text .hero-name::before { display: none; }
-            .hero-text h1 { font-size: 2.6rem; }
+            .hero-text h1 { font-size: 2.5rem; }
             .hero-buttons { justify-content: center; }
-            nav .phone-number { display: none; }
+            header.top-bar .phone-number { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fixed Header Navigation -->
-    <nav>
-        <ul class="nav-links">
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#strategy">Strategy</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#tools">Tools & Tech</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+    <!-- Fixed Header Top Bar (Without Navigation Links) -->
+    <header class="top-bar">
+        <a href="#home" class="brand-logo">Abdelkaioum <span>Beldjoudi</span></a>
         
         <div class="nav-right">
             <div class="phone-number">+20 112 911 4212</div>
@@ -761,9 +751,9 @@
                 </a>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Section 1: Hero Section (Updated with Selected Title Pair) -->
+    <!-- Section 1: Hero Section (Enlarged Name & Clean Layout) -->
     <section class="hero reveal" id="home">
         <div class="hero-text">
             <div class="hero-name">Abdelkaioum Beldjoudi</div>
