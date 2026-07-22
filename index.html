@@ -64,6 +64,76 @@
             transform: translateY(0) scale(1);
         }
 
+        /* Compact Header Bar */
+        header.top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 6%;
+        }
+
+        .brand-logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+            text-decoration: none;
+        }
+
+        .brand-logo span {
+            color: var(--accent-blue);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .phone-number {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .nav-socials {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-left: 1px solid var(--border-glass);
+            padding-left: 12px;
+        }
+
+        .nav-socials a {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+        }
+
+        .nav-socials a:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .nav-socials a:hover .icon-instagram { color: #E4405F; }
+        .nav-socials a:hover .icon-facebook { color: #1877F2; }
+
         /* Section Header Styling */
         .section-header {
             text-align: center;
@@ -107,13 +177,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 80px 8% 60px 8%;
+            padding: 110px 8% 60px 8%;
             gap: 40px;
         }
 
         .hero-text { flex: 1; }
         
-        /* Enlarged Name Styling */
         .hero-text .hero-name {
             font-size: 2.2rem;
             color: var(--accent-blue);
@@ -690,23 +759,47 @@
         .footer-socials a:hover .icon-facebook { color: #1877F2; }
 
         @media (max-width: 992px) {
+            /* Mobile adjustments for Header (Not fixed on scroll) */
+            header.top-bar {
+                position: absolute; /* Moves with scroll, does NOT stick down on mobile */
+                padding: 12px 5%;
+            }
+
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .canvas-grid { grid-template-columns: 1fr; }
             .canvas-col { border-right: none; border-bottom: 1px solid var(--border-glass); padding: 35px 25px; }
             .canvas-col:last-child { border-bottom: none; }
             .timeline-line { display: none; }
             .dashboard { grid-template-columns: 1fr; gap: 40px; }
-            .hero { flex-direction: column-reverse; text-align: center; padding-top: 60px; }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 90px; }
             .hero-text .hero-name { justify-content: center; font-size: 1.8rem; }
             .hero-text .hero-name::before { display: none; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-buttons { justify-content: center; }
+            header.top-bar .phone-number { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Section 1: Hero Section (Clean Layout) -->
+    <!-- Compact Header Bar (Not Fixed on Mobile Scroll) -->
+    <header class="top-bar">
+        <a href="#home" class="brand-logo">Abdelkaioum <span>Beldjoudi</span></a>
+        
+        <div class="nav-right">
+            <div class="phone-number">+20 112 911 4212</div>
+            <div class="nav-socials">
+                <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram icon-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook icon-facebook"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 1: Hero Section -->
     <section class="hero reveal" id="home">
         <div class="hero-text">
             <div class="hero-name">Abdelkaioum Beldjoudi</div>
@@ -1138,7 +1231,7 @@
         </div>
     </section>
 
-    <!-- Footer with Social Media Links -->
+    <!-- Footer -->
     <footer>
         <div class="footer-socials">
             <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
