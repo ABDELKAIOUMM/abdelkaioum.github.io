@@ -1,823 +1,1281 @@
-import { useState, useEffect, useRef } from 'react';
-import './portfolio.css';
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdelkaioum Beldjoudi | Performance Marketer & Media Buyer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-// ─── Translation Data ─────────────────────────────────────────────────────────
-const translations = {
-  en: {
-    dir: 'ltr',
-    lang: 'en',
-    // Header
-    brandFirst: 'Abdelkaioum',
-    brandLast: 'Beldjoudi',
-    phone: '+20 112 911 4212',
-    toggleLang: 'عربي',
+    <style>
+        :root {
+            --bg-deep: #080c14;
+            --bg-surface: rgba(15, 23, 42, 0.5);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(56, 189, 248, 0.4);
+            --accent-blue: #38bdf8;
+            --accent-indigo: #818cf8;
+            --accent-emerald: #34d399;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
 
-    // Hero
-    heroName: 'Abdelkaioum Beldjoudi',
-    heroH1: 'Performance Marketer & Media Buyer',
-    heroSubtitle: 'Paid Ads, Analytics & Funnel Strategy',
-    heroDesc:
-      'Managing ad budgets with mathematical precision. I build data-driven marketing blueprints that turn cold traffic into predictable sales and high-LTV customers.',
-    heroBtn1: 'Get In Touch',
-    heroBtn2: 'My Strategy Pipeline',
+        html {
+            scroll-behavior: smooth;
+        }
 
-    // About
-    aboutBadge: 'ABOUT ME',
-    aboutH2: 'About Me',
-    aboutEmail: 'abdlkayomd@gmail.com',
-    aboutP1:
-      'Experienced Performance Marketer and Media Buyer specializing in managing ad budgets with mathematical precision. I leverage strategic market research and advanced audience segmentation to drive reliable business growth.',
-    aboutP2:
-      'My approach eliminates guesswork — every campaign is built on data, tested rigorously, and scaled only when proven to deliver results.',
-    pills: ['Performance Marketing', 'Media Buying', 'Market Research', 'Data Analytics', 'Funnel Optimization'],
-    location: 'Cairo, Egypt • Fifth Settlement',
-    fc1Title: 'ROAS–Focused',
-    fc1Desc: 'Every decision tied to ROI',
-    fc2Title: 'Precision Targeting',
-    fc2Desc: 'Right audience, right message',
-    fc3Title: 'Data–Driven Testing',
-    fc3Desc: 'Continuous A/B optimization',
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    // Canvas / Framework
-    frameworkBadge: 'FRAMEWORK',
-    frameworkH2: 'My Strategic Growth Canvas',
-    frameworkDesc:
-      'A successful campaign is never random. Every project follows this proven 3-stage funnel blueprint that turns cold audiences into loyal, high-value customers:',
-    stage1Badge: 'STAGE 01 • BEFORE (TOFU)',
-    stage1H3: 'Top of Funnel • Prospects',
-    stage1P:
-      'Pinpointing your ideal target market with precise demographic profiling, capturing immediate attention, crafting an irresistible Unique Selling Proposition (USP), and maximizing multi-channel reach.',
-    stage2Badge: 'STAGE 02 • DURING (MOFU)',
-    stage2H3: 'Middle of Funnel • Leads',
-    stage2P:
-      'Capturing high-intent lead data (Lead Capture), nurturing prospects through value-driven content, establishing complete market authority, and building deep brand trust.',
-    stage3Badge: 'STAGE 03 • AFTER (BOFU)',
-    stage3H3: 'Bottom of Funnel • Customers',
-    stage3P:
-      'Closing high-ticket sales with irresistible offers, delivering an unforgettable customer experience, expanding Customer Lifetime Value (LTV), and driving continuous repeat referrals.',
+        body {
+            font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 85% 60%, rgba(129, 140, 248, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(52, 211, 153, 0.05) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
 
-    // Services
-    servicesBadge: 'SERVICES',
-    servicesH2: 'Services & Core Expertise',
-    servicesDesc: 'Comprehensive growth capabilities tailored to boost revenue.',
-    tags: [
-      { icon: 'fa-chess-knight', label: 'Marketing Strategy' },
-      { icon: 'fa-rectangle-ad', label: 'Digital Advertising' },
-      { icon: 'fa-share-nodes', label: 'Social Media Marketing' },
-      { icon: 'fa-bullhorn', label: 'Brand Marketing' },
-      { icon: 'fa-pen-nib', label: 'Content Strategy' },
-      { icon: 'fa-chart-line', label: 'Performance Marketing' },
-      { icon: 'fa-filter-circle-dollar', label: 'Sales Funnel Optimization' },
-    ],
-    srv1Icon: 'fa-diagram-project',
-    srv1H4: 'End-to-End Marketing Strategy',
-    srv1P:
-      'Designing comprehensive 1-page marketing plans tailored to your specific business model with step-by-step implementation monitoring.',
-    srv2Icon: 'fa-rectangle-ad',
-    srv2H4: 'Meta Ads Campaign Management',
-    srv2P:
-      'Full management of Facebook & Instagram ad campaigns, utilizing advanced audience segmentation to maximize your ad budget efficiency.',
-    srv3Icon: 'fa-chart-pie',
-    srv3H4: 'Data Analytics & ROAS Optimization',
-    srv3P:
-      'In-depth metrics analysis, continuous A/B testing, and campaign restructuring focused on constantly raising your Return on Ad Spend.',
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
 
-    // Tools
-    toolsBadge: 'TECH STACK',
-    toolsH2: 'Tools & Tech Stack',
-    toolsDesc:
-      'The official specialized platforms and AI engines leveraged to research, deploy, and scale campaigns.',
-    toolCat1: 'Paid Advertising Platforms',
-    toolCat2: 'Market Research & Intelligence',
-    toolCat3: 'AI Deep Research Tools',
-    toolCat4: 'Analytics & Tracking',
-    toolCat5: 'Data & Office Software',
-    toolCat6: 'Store & Web Infrastructure',
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
 
-    // Dashboard
-    dashBadge: 'EXPERIENCE',
-    skillsH4: 'Advertising Skills',
-    langH4: 'Languages',
-    expH4: 'Professional Experience',
-    valueH4: 'What Can I Bring to Your Business?',
-    skills: [
-      { label: 'Meta Ads (Facebook & Instagram)', val: 95 },
-      { label: 'Google Ads (Search & Display)', val: 85 },
-      { label: 'TikTok Ads', val: 80 },
-      { label: 'Data Analytics (Google Analytics)', val: 75 },
-    ],
-    langs: [
-      { label: 'Arabic (Native)', val: 100 },
-      { label: 'English', val: 85 },
-    ],
-    exp: [
-      {
-        title: 'Media Buyer Specialist',
-        period: '2024 – Present',
-        desc: 'Managing high-budget ad campaigns for local and regional e-commerce brands, driving exceptional Return on Ad Spend (ROAS).',
-      },
-      {
-        title: 'Performance Marketer',
-        period: '2022 – 2024',
-        desc: 'Designing custom sales funnels and high-converting landing pages to boost direct purchase conversion rates.',
-      },
-    ],
-    value: [
-      {
-        strong: 'Increased Revenue & Sales:',
-        text: 'Transforming underperforming ad budgets into data-backed, scalable sales machines.',
-      },
-      {
-        strong: 'High-Intent Audience Targeting:',
-        text: 'Reaching buyers who are ready to take action, minimizing wasted spend on unqualified clicks.',
-      },
-    ],
+        /* Compact Header Bar */
+        header.top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 6%;
+        }
 
-    // Contact
-    contactBadge: 'CONTACT',
-    contactH2: 'Ready to Scale Your Business?',
-    contactDesc:
-      "Have a new project, an existing ad account that needs optimization, or looking for a custom marketing strategy? Let\u2019s connect and discuss how we can grow your revenue.",
-    contactCard1Title: 'WhatsApp',
-    contactCard1Sub: 'Chat Directly',
-    contactCard2Title: 'Email',
-    contactCard2Sub: 'Send a Message',
-    contactCard3Title: 'LinkedIn',
-    contactCard3Sub: 'Connect Professionally',
+        .brand-logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+            text-decoration: none;
+        }
 
-    // Footer
-    footerCopy: '© 2026 Abdelkaioum Beldjoudi. All rights reserved.',
-  },
+        .brand-logo span {
+            color: var(--accent-blue);
+        }
 
-  ar: {
-    dir: 'rtl',
-    lang: 'ar',
-    // Header
-    brandFirst: 'عبد القيوم',
-    brandLast: 'بلجودي',
-    phone: '+20 112 911 4212',
-    toggleLang: 'English',
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-    // Hero
-    heroName: 'عبد القيوم بلجودي',
-    heroH1: 'مسوّق أداء ومشتري إعلانات',
-    heroSubtitle: 'إعلانات مدفوعة، تحليلات وبناء القمع التسويقي',
-    heroDesc:
-      'أدير ميزانيات الإعلانات بدقة حسابية عالية. أبني خططًا تسويقية مبنية على البيانات تحوّل الجمهور البارد إلى مبيعات قابلة للتنبؤ وعملاء ذوي قيمة عمرية عالية.',
-    heroBtn1: 'تواصل معي',
-    heroBtn2: 'خطتي الاستراتيجية',
+        .phone-number {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
 
-    // About
-    aboutBadge: 'نبذة عني',
-    aboutH2: 'نبذة عني',
-    aboutEmail: 'abdlkayomd@gmail.com',
-    aboutP1:
-      'مسوّق أداء ومشتري إعلانات محترف متخصص في إدارة ميزانيات الإعلانات بأعلى مستويات الدقة. أعتمد على البحث الاستراتيجي في السوق والتقسيم المتقدم للجمهور لتحقيق نمو تجاري موثوق ومستدام.',
-    aboutP2:
-      'منهجيتي تُلغي العشوائية تمامًا — كل حملة تُبنى على البيانات، وتُختبر بصرامة، ولا تُطلق للتوسع إلا بعد إثبات فاعليتها الفعلية في تحقيق النتائج.',
-    pills: ['تسويق الأداء', 'شراء الوسائط', 'أبحاث السوق', 'تحليلات البيانات', 'تحسين قمع المبيعات'],
-    location: 'القاهرة، مصر • التجمع الخامس',
-    fc1Title: 'تركيز على العائد (ROAS)',
-    fc1Desc: 'كل قرار مرتبط بالعائد على الاستثمار',
-    fc2Title: 'استهداف دقيق',
-    fc2Desc: 'الجمهور المناسب والرسالة الصحيحة',
-    fc3Title: 'اختبار مبني على البيانات',
-    fc3Desc: 'تحسين مستمر عبر اختبارات A/B',
+        .nav-socials {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-left: 1px solid var(--border-glass);
+            padding-left: 12px;
+        }
 
-    // Canvas / Framework
-    frameworkBadge: 'الإطار الاستراتيجي',
-    frameworkH2: 'خارطة النمو الاستراتيجية',
-    frameworkDesc:
-      'النجاح في الحملات الإعلانية ليس مصادفة. كل مشروع يسير وفق مخطط القمع التسويقي المُثبت من ثلاث مراحل، يحوّل الجمهور الجديد إلى عملاء مخلصين ذوي قيمة عالية:',
-    stage1Badge: 'المرحلة الأولى • قبل الشراء (أعلى القمع)',
-    stage1H3: 'أعلى القمع • المحتملون',
-    stage1P:
-      'تحديد السوق المستهدف المثالي بتحليل ديموغرافي دقيق، استقطاب الانتباه الفوري، صياغة عرض قيمة فريد لا يُقاوم (USP)، وتعظيم الوصول عبر قنوات متعددة.',
-    stage2Badge: 'المرحلة الثانية • أثناء التفاعل (وسط القمع)',
-    stage2H3: 'وسط القمع • العملاء المحتملون',
-    stage2P:
-      'جمع بيانات العملاء ذوي النية العالية (التقاط العملاء المحتملين)، رعايتهم من خلال محتوى يضيف قيمة حقيقية، وبناء سلطة راسخة في السوق تعزز الثقة بالعلامة التجارية.',
-    stage3Badge: 'المرحلة الثالثة • بعد الشراء (أسفل القمع)',
-    stage3H3: 'أسفل القمع • العملاء الفعليون',
-    stage3P:
-      'إتمام صفقات المبيعات بعروض لا تُرفض، تقديم تجربة عملاء لا تُنسى، تعظيم القيمة العمرية للعميل (LTV)، وتحفيز الإحالات المستمرة والمتكررة.',
+        .nav-socials a {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+        }
 
-    // Services
-    servicesBadge: 'الخدمات',
-    servicesH2: 'الخدمات والكفاءات الأساسية',
-    servicesDesc: 'قدرات نمو شاملة مصممة خصيصًا لتعزيز الإيرادات.',
-    tags: [
-      { icon: 'fa-chess-knight', label: 'الاستراتيجية التسويقية' },
-      { icon: 'fa-rectangle-ad', label: 'الإعلان الرقمي' },
-      { icon: 'fa-share-nodes', label: 'تسويق وسائل التواصل' },
-      { icon: 'fa-bullhorn', label: 'تسويق العلامة التجارية' },
-      { icon: 'fa-pen-nib', label: 'استراتيجية المحتوى' },
-      { icon: 'fa-chart-line', label: 'تسويق الأداء' },
-      { icon: 'fa-filter-circle-dollar', label: 'تحسين قمع المبيعات' },
-    ],
-    srv1Icon: 'fa-diagram-project',
-    srv1H4: 'استراتيجية تسويقية متكاملة',
-    srv1P:
-      'تصميم خطط تسويقية شاملة في صفحة واحدة مُخصصة لنموذج عملك، مع متابعة دقيقة لكل خطوة من خطوات التنفيذ.',
-    srv2Icon: 'fa-rectangle-ad',
-    srv2H4: 'إدارة حملات Meta Ads',
-    srv2P:
-      'إدارة متكاملة لحملات إعلانات فيسبوك وإنستغرام، مع توظيف تقسيم الجمهور المتقدم لتحقيق أقصى كفاءة لميزانيتك الإعلانية.',
-    srv3Icon: 'fa-chart-pie',
-    srv3H4: 'تحليلات البيانات وتحسين العائد',
-    srv3P:
-      'تحليل عميق للمقاييس، واختبارات A/B متواصلة، وإعادة هيكلة الحملات بهدف رفع العائد على الإنفاق الإعلاني باستمرار.',
+        .nav-socials a:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
 
-    // Tools
-    toolsBadge: 'المنظومة التقنية',
-    toolsH2: 'الأدوات والمنظومة التقنية',
-    toolsDesc:
-      'المنصات المتخصصة ومحركات الذكاء الاصطناعي المستخدمة في البحث وإطلاق الحملات وتوسيع نطاقها.',
-    toolCat1: 'منصات الإعلان المدفوع',
-    toolCat2: 'أبحاث السوق والذكاء التنافسي',
-    toolCat3: 'أدوات البحث بالذكاء الاصطناعي',
-    toolCat4: 'التحليلات والتتبع',
-    toolCat5: 'تحليل البيانات والبرمجيات المكتبية',
-    toolCat6: 'البنية التحتية للمتاجر والويب',
+        .nav-socials a:hover .icon-instagram { color: #E4405F; }
+        .nav-socials a:hover .icon-facebook { color: #1877F2; }
 
-    // Dashboard
-    dashBadge: 'الخبرة المهنية',
-    skillsH4: 'مهارات الإعلان',
-    langH4: 'اللغات',
-    expH4: 'الخبرة المهنية',
-    valueH4: 'ما الذي أستطيع تقديمه لعملك؟',
-    skills: [
-      { label: 'Meta Ads (فيسبوك وإنستغرام)', val: 95 },
-      { label: 'Google Ads (بحث وعرض)', val: 85 },
-      { label: 'TikTok Ads', val: 80 },
-      { label: 'تحليلات البيانات (Google Analytics)', val: 75 },
-    ],
-    langs: [
-      { label: 'العربية (لغة أم)', val: 100 },
-      { label: 'الإنجليزية', val: 85 },
-    ],
-    exp: [
-      {
-        title: 'أخصائي شراء إعلانات',
-        period: '2024 – حتى الآن',
-        desc: 'إدارة حملات إعلانية بميزانيات ضخمة لعلامات تجارية محلية وإقليمية في مجال التجارة الإلكترونية، مع تحقيق عائد استثناء على الإنفاق الإعلاني.',
-      },
-      {
-        title: 'مسوّق أداء',
-        period: '2022 – 2024',
-        desc: 'تصميم قمع مبيعات مخصص وصفحات هبوط عالية التحويل لرفع معدلات الشراء المباشر.',
-      },
-    ],
-    value: [
-      {
-        strong: 'زيادة الإيرادات والمبيعات:',
-        text: 'تحويل ميزانيات الإعلانات ذات الأداء المتراجع إلى آلات مبيعات قابلة للتوسع ومدعومة بالبيانات.',
-      },
-      {
-        strong: 'استهداف الجمهور صاحب النية الشرائية:',
-        text: 'الوصول إلى المشترين المستعدين للتحرك، وتقليص الإنفاق المهدور على النقرات غير المؤهلة.',
-      },
-    ],
+        /* Section Header Styling */
+        .section-header {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 40px auto;
+        }
 
-    // Contact
-    contactBadge: 'تواصل معي',
-    contactH2: 'مستعد لتوسيع نطاق عملك؟',
-    contactDesc:
-      'هل لديك مشروع جديد، حساب إعلاني يحتاج إلى تحسين، أو تبحث عن استراتيجية تسويقية مخصصة؟ تواصل معي لنناقش كيف نرفع إيراداتك معًا.',
-    contactCard1Title: 'واتساب',
-    contactCard1Sub: 'محادثة مباشرة',
-    contactCard2Title: 'البريد الإلكتروني',
-    contactCard2Sub: 'أرسل رسالة',
-    contactCard3Title: 'LinkedIn',
-    contactCard3Sub: 'تواصل مهني',
+        .framework-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(56, 189, 248, 0.08);
+            padding: 5px 18px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
 
-    // Footer
-    footerCopy: '© 2026 عبد القيوم بلجودي. جميع الحقوق محفوظة.',
-  },
-};
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-// ─── Inline SVGs ──────────────────────────────────────────────────────────────
-const MetaSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#0668E1" width={18} height={18}>
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-  </svg>
-);
-const GoogleSVG = () => (
-  <svg viewBox="0 0 24 24" width={18} height={18}>
-    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" />
-    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.15C3.26 21.3 7.31 24 12 24z" />
-    <path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.99-3.15z" />
-    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.72-4.96z" />
-  </svg>
-);
-const TikTokSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#FFFFFF" width={18} height={18}>
-    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.31 1.56-1.24 2.56.03.74.4 1.46.99 1.89.89.65 2.11.75 3.08.26.89-.43 1.52-1.31 1.61-2.29.04-2.88.01-5.76.02-8.64-.01-3.65-.01-7.3-.01-10.95z" />
-  </svg>
-);
-const SnapSVG = () => (
-  <svg viewBox="0 0 24 24" width={18} height={18}>
-    <path fill="#FFFC00" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z" />
-  </svg>
-);
-const GoogleTrendsSVG = () => (
-  <svg viewBox="0 0 24 24" width={18} height={18}>
-    <path fill="#4285F4" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
-  </svg>
-);
-const MetaLibSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#0668E1" width={18} height={18}>
-    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
-  </svg>
-);
-const TikTokCCSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#25F4EE" width={18} height={18}>
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z" />
-  </svg>
-);
-const SimilarwebSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#3b82f6" width={18} height={18}>
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-  </svg>
-);
-const PerplexitySVG = () => (
-  <svg viewBox="0 0 24 24" fill="#20B2AA" width={18} height={18}>
-    <path d="M12 0L9.17 9.17L0 12l9.17 2.83L12 24l2.83-9.17L24 12l-9.17-2.83z" />
-  </svg>
-);
-const ChatGPTSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#10A37F" width={18} height={18}>
-    <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729z" />
-  </svg>
-);
-const ClaudeSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#D97706" width={18} height={18}>
-    <path d="M4.5 3A1.5 1.5 0 0 0 3 4.5v15A1.5 1.5 0 0 0 4.5 21h15a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 19.5 3h-15zM8 7.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H8a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5z" />
-  </svg>
-);
-const GeminiSVG = () => (
-  <svg viewBox="0 0 24 24" width={18} height={18}>
-    <path fill="#8E75FF" d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z" />
-  </svg>
-);
-const GA4SVG = () => (
-  <svg viewBox="0 0 24 24" width={18} height={18}>
-    <path fill="#E37400" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-5h2v5zm4 0h-2V7h2v10zm4 0h-2v-8h2v8z" />
-  </svg>
-);
-const GTMSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#246FDB" width={18} height={18}>
-    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-  </svg>
-);
-const PixelSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#0668E1" width={18} height={18}>
-    <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
-  </svg>
-);
-const ExcelSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#107C41" width={18} height={18}>
-    <path d="M21.17 3H7.83A1.83 1.83 0 0 0 6 4.83v14.34A1.83 1.83 0 0 0 7.83 21h13.34A1.83 1.83 0 0 0 23 19.17V4.83A1.83 1.83 0 0 0 21.17 3zM1 18l4-6-4-6h3l2.5 4L9 6h3L8 12l4 6H9l-2.5-4L4 18H1z" />
-  </svg>
-);
-const SheetsSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#0F9D58" width={18} height={18}>
-    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
-  </svg>
-);
-const OfficeSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#38bdf8" width={18} height={18}>
-    <path d="M4 6h16v10H4zm16 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2zm-8 1h4v2h-4z" />
-  </svg>
-);
-const ShopifySVG = () => (
-  <svg viewBox="0 0 24 24" fill="#95BF47" width={18} height={18}>
-    <path d="M15.3 3.6c-.1 0-.2.1-.2.2l-.7 3.3c-.5-.1-1-.2-1.5-.2-2.8 0-4.9 2-4.9 4.8 0 2.5 1.7 4.2 4.1 4.2 2.6 0 4.6-1.8 4.6-4.6 0-.3 0-.6-.1-.9l1.4-2.8c.1-.2 0-.4-.2-.5l-2.5-1.5zm-3.1 9.8c-1.3 0-2.3-1-2.3-2.3 0-1.5 1.1-2.6 2.6-2.6.3 0 .7.1 1 .2l-1.3 4.7c-.3 0-.7 0-1 0z" />
-  </svg>
-);
-const VsCodeSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#007ACC" width={18} height={18}>
-    <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.276a1 1 0 0 0 0 1.448l3.163 2.924L.327 14.572a1 1 0 0 0 0 1.448l1.322 1.217a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 19.348V4.252a1.5 1.5 0 0 0-.85-1.665z" />
-  </svg>
-);
-const HTMLSVG = () => (
-  <svg viewBox="0 0 24 24" fill="#E34F26" width={18} height={18}>
-    <path d="M1.5 0h21l-1.91 21.563L11.97 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.625 10.267.014.234-2.639H5.406l.69 7.75h8.61l-.367 4.125-2.369.641-2.38-.642-.152-1.719H7.062l.302 3.404 4.606 1.278 4.61-1.278.63-7.063H8.531z" />
-  </svg>
-);
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+            line-height: 1.7;
+        }
 
-// ─── Reveal Hook ──────────────────────────────────────────────────────────────
-function useReveal() {
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+        /* Section 1: Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 110px 8% 60px 8%;
+            gap: 40px;
+        }
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+        .hero-text { flex: 1; }
+        
+        .hero-text .hero-name {
+            font-size: 2.2rem;
+            color: var(--accent-blue);
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            line-height: 1.1;
+        }
 
-  return { ref, visible };
-}
+        .hero-text .hero-name::before {
+            content: '';
+            width: 35px;
+            height: 3px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
 
-// ─── Skill Bar Component ───────────────────────────────────────────────────────
-function SkillBar({ label, val, trigger }: { label: string; val: number; trigger: boolean }) {
-  return (
-    <div className="skill-item">
-      <div className="skill-info">
-        <span>{label}</span>
-        <span>{val}%</span>
-      </div>
-      <div className="progress-bar">
-        <div
-          className="progress-fill"
-          style={{ width: trigger ? `${val}%` : '0%', transition: 'width 1.5s cubic-bezier(0.16,1,0.3,1)' }}
-        />
-      </div>
-    </div>
-  );
-}
+        .hero-text h1 { 
+            font-size: 3.2rem; 
+            font-weight: 900; 
+            line-height: 1.15; 
+            margin-bottom: 14px; 
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-// ─── Main App ─────────────────────────────────────────────────────────────────
-export default function App() {
-  const [lang, setLang] = useState<'en' | 'ar'>('en');
-  const t = translations[lang];
-  const isAr = lang === 'ar';
+        .hero-text .hero-subtitle { 
+            color: var(--accent-indigo); 
+            font-size: 1.25rem; 
+            font-weight: 700; 
+            margin-bottom: 24px; 
+            display: inline-block;
+            background: rgba(129, 140, 248, 0.08);
+            border: 1px solid rgba(129, 140, 248, 0.25);
+            padding: 6px 20px;
+            border-radius: 30px;
+        }
 
-  // Reveal refs
-  const heroReveal = useReveal();
-  const aboutReveal = useReveal();
-  const canvasReveal = useReveal();
-  const servicesReveal = useReveal();
-  const toolsReveal = useReveal();
-  const dashReveal = useReveal();
-  const contactReveal = useReveal();
+        .hero-text .hero-desc {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            margin-bottom: 35px;
+            max-width: 600px;
+        }
 
-  // Skill bar trigger when dashboard is visible
-  const [skillTrigger, setSkillTrigger] = useState(false);
-  useEffect(() => {
-    if (dashReveal.visible) setTimeout(() => setSkillTrigger(true), 200);
-  }, [dashReveal.visible]);
+        .hero-buttons { display: flex; gap: 15px; }
 
-  // Apply dir to html element
-  useEffect(() => {
-    document.documentElement.setAttribute('dir', t.dir);
-    document.documentElement.setAttribute('lang', t.lang);
-  }, [lang, t.dir, t.lang]);
+        .hero-image { display: flex; justify-content: center; align-items: center; flex: 1; }
+        .hero-image img {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+            animation: floatImage 4s ease-in-out infinite;
+        }
 
-  const toggleLang = () => setLang(prev => prev === 'en' ? 'ar' : 'en');
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
 
-  return (
-    <div className={`portfolio-root${isAr ? ' rtl' : ''}`}>
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+        }
 
-      {/* ── HEADER ─────────────────────────────────────────────────────── */}
-      <header className="top-bar">
-        <a href="#home" className="brand-logo">
-          {t.brandFirst} <span>{t.brandLast}</span>
-        </a>
+        .btn-outline:hover { background-color: var(--text-primary); color: var(--bg-deep); transform: translateY(-3px); }
+        .btn-outline.active { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(56, 189, 248, 0.08); }
+        .btn-outline.active:hover { background-color: var(--accent-blue); color: var(--bg-deep); }
 
-        <div className="nav-right">
-          <div className="phone-number">{t.phone}</div>
+        /* Section 2: About Me Section */
+        .about {
+            padding: 100px 8%;
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border-glass);
+        }
 
-          {/* Language Toggle Button */}
-          <button className="lang-toggle-btn" onClick={toggleLang} aria-label="Toggle Language">
-            <i className="fa-solid fa-language"></i>
-            <span>{t.toggleLang}</span>
-          </button>
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
 
-          <div className="nav-socials">
-            <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" rel="noreferrer" aria-label="Instagram">
-              <i className="fa-brands fa-instagram icon-instagram"></i>
+        .about-left h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .about-email:hover { text-decoration: underline; }
+
+        .about-p-text {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+
+        .about-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .about-pill {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: #cbd5e1;
+            padding: 7px 18px;
+            border-radius: 30px;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .about-pill:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .about-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 14px;
+        }
+
+        .about-right {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .feature-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 22px 24px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(6px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .icon-blue { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); }
+        .icon-purple { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); }
+        .icon-green { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); }
+
+        .feature-info h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .feature-info p {
+            color: var(--text-secondary);
+            font-size: 0.86rem;
+        }
+
+        /* Section 3: Canvas Framework Layout */
+        .canvas-section {
+            padding: 100px 8%;
+            position: relative;
+        }
+
+        .canvas-card-container {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+            margin-top: 35px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 68px;
+            left: 12%;
+            right: 12%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.4) 0%, rgba(129, 140, 248, 0.4) 50%, rgba(52, 211, 153, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            position: relative;
+            z-index: 2;
+        }
+
+        .canvas-col {
+            padding: 45px 35px 40px 35px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-glass);
+        }
+
+        .canvas-col:last-child { border-right: none; }
+
+        .col-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #0b111e;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            margin-bottom: 28px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .col-icon-box.stage-1 { color: var(--accent-blue); border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 0 15px rgba(56, 189, 248, 0.15); }
+        .col-icon-box.stage-2 { color: var(--accent-indigo); border-color: rgba(129, 140, 248, 0.3); box-shadow: 0 0 15px rgba(129, 140, 248, 0.15); }
+        .col-icon-box.stage-3 { color: var(--accent-emerald); border-color: rgba(52, 211, 153, 0.3); box-shadow: 0 0 15px rgba(52, 211, 153, 0.15); }
+
+        .col-badge {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .col-badge.stage-1 { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.25); }
+        .col-badge.stage-2 { background: rgba(129, 140, 248, 0.12); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.25); }
+        .col-badge.stage-3 { background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.25); }
+
+        .canvas-col h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .canvas-col p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* Section 4: Services Offered & Expertise Badges */
+        .services-section {
+            padding: 90px 8%;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-glass);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .tag-badge {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            padding: 9px 20px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tag-badge:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            padding: 30px;
+            border-radius: 18px;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+        }
+
+        .service-card h4 {
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* Section 5: Tools & Tech Stack */
+        .tools-section {
+            padding: 100px 8%;
+            position: relative;
+        }
+
+        .tools-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .tools-category-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tools-category-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(15, 23, 42, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .category-header h4 {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.2px;
+        }
+
+        .category-header i {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+        }
+
+        .brand-pills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .brand-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            color: #cbd5e1;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: default;
+            transition: all 0.25s ease;
+        }
+
+        .brand-pill svg, .brand-pill img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .brand-pill:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+        }
+
+        /* Section 6: Experience & Skills Dashboard */
+        .dashboard {
+            padding: 100px 8%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .dashboard-column h4 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 35px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 12px;
+        }
+
+        .skill-item { margin-bottom: 22px; }
+        .skill-info { display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 8px; }
+        .progress-bar { width: 100%; height: 5px; background-color: rgba(255, 255, 255, 0.08); position: relative; border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; background-color: var(--accent-blue); width: 0%; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 12px var(--accent-blue); }
+
+        .timeline { position: relative; border-left: 2px solid var(--border-glass); padding-left: 20px; list-style: none; }
+        .timeline-item { position: relative; margin-bottom: 30px; }
+        .timeline-item::before { content: ''; position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background-color: var(--bg-deep); border: 2px solid var(--accent-blue); border-radius: 50%; }
+        .timeline-item h5 { font-size: 1rem; color: var(--text-primary); font-weight: 700; }
+        .timeline-item span { font-size: 0.85rem; color: var(--accent-blue); display: block; margin-bottom: 4px; }
+        .timeline-item p { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .text-list { list-style: none; margin-bottom: 30px; }
+        .text-list li { color: var(--text-secondary); margin-bottom: 12px; font-size: 0.93rem; }
+        .text-list li strong { color: var(--text-primary); display: block; font-size: 0.98rem; }
+
+        /* Section 7: Contact Section */
+        .contact-cta {
+            padding: 100px 8%;
+            text-align: center;
+        }
+
+        .cta-container { max-width: 750px; margin: 0 auto; }
+        .contact-cta h2 { font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 15px; letter-spacing: -0.5px; }
+        .contact-cta p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 45px; line-height: 1.7; }
+
+        .contact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .contact-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            padding: 24px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-card:hover { border-color: var(--accent-blue); transform: translateY(-6px); background: rgba(255, 255, 255, 0.05); }
+        .card-icon { background: rgba(56, 189, 248, 0.1); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+        .card-icon i { font-size: 1.4rem; color: var(--accent-blue); }
+
+        .contact-card:hover .icon-whatsapp { color: #25D366; }
+        .contact-card:hover .icon-gmail { color: #EA4335; }
+        .contact-card:hover .icon-linkedin { color: #0A66C2; }
+
+        .card-info { text-align: left; }
+        .card-info h3 { color: var(--text-primary); font-size: 1rem; font-weight: 700; }
+        .card-info span { color: var(--text-secondary); font-size: 0.83rem; }
+
+        /* Footer & Social Links */
+        footer { 
+            padding: 40px 8%; 
+            background-color: var(--bg-deep); 
+            border-top: 1px solid var(--border-glass); 
+            text-align: center; 
+            color: var(--text-secondary); 
+            font-size: 0.88rem; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-socials a:hover .icon-instagram { color: #E4405F; }
+        .footer-socials a:hover .icon-facebook { color: #1877F2; }
+
+        @media (max-width: 992px) {
+            /* Mobile adjustments for Header (Not fixed on scroll) */
+            header.top-bar {
+                position: absolute; /* Moves with scroll, does NOT stick down on mobile */
+                padding: 12px 5%;
+            }
+
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .canvas-grid { grid-template-columns: 1fr; }
+            .canvas-col { border-right: none; border-bottom: 1px solid var(--border-glass); padding: 35px 25px; }
+            .canvas-col:last-child { border-bottom: none; }
+            .timeline-line { display: none; }
+            .dashboard { grid-template-columns: 1fr; gap: 40px; }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 90px; }
+            .hero-text .hero-name { justify-content: center; font-size: 1.8rem; }
+            .hero-text .hero-name::before { display: none; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-buttons { justify-content: center; }
+            header.top-bar .phone-number { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Compact Header Bar (Not Fixed on Mobile Scroll) -->
+    <header class="top-bar">
+        <a href="#home" class="brand-logo">Abdelkaioum <span>Beldjoudi</span></a>
+        
+        <div class="nav-right">
+            <div class="phone-number">+20 112 911 4212</div>
+            <div class="nav-socials">
+                <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram icon-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook icon-facebook"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 1: Hero Section -->
+    <section class="hero reveal" id="home">
+        <div class="hero-text">
+            <div class="hero-name">Abdelkaioum Beldjoudi</div>
+            <h1>Performance Marketer & Media Buyer</h1>
+            <div class="hero-subtitle">Paid Ads, Analytics & Funnel Strategy</div>
+            
+            <p class="hero-desc">
+                Managing ad budgets with mathematical precision. I build data-driven marketing blueprints that turn cold traffic into predictable sales and high-LTV customers.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#contact" class="btn-outline active">Get In Touch</a>
+                <a href="#strategy" class="btn-outline">My Strategy Pipeline</a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img src="profile.png" alt="Abdelkaioum Beldjoudi - Performance Marketer & Media Buyer">
+        </div>
+    </section>
+
+    <!-- Section 2: About Me Section -->
+    <section class="about reveal" id="about">
+        <div class="about-grid">
+            
+            <div class="about-left">
+                <h2>About Me</h2>
+                <a href="mailto:abdlkayomd@gmail.com" class="about-email">
+                    <i class="fa-solid fa-envelope"></i> abdlkayomd@gmail.com
+                </a>
+                
+                <p class="about-p-text">
+                    Experienced Performance Marketer and Media Buyer specializing in managing ad budgets with mathematical precision. I leverage strategic market research and advanced audience segmentation to drive reliable business growth.
+                </p>
+
+                <p class="about-p-text">
+                    My approach eliminates guesswork — every campaign is built on data, tested rigorously, and scaled only when proven to deliver results.
+                </p>
+
+                <div class="about-pills">
+                    <span class="about-pill">Performance Marketing</span>
+                    <span class="about-pill">Media Buying</span>
+                    <span class="about-pill">Market Research</span>
+                    <span class="about-pill">Data Analytics</span>
+                    <span class="about-pill">Funnel Optimization</span>
+                </div>
+
+                <div class="about-location">
+                    <i class="fa-solid fa-location-dot"></i> Cairo, Egypt • Fifth Settlement
+                </div>
+            </div>
+
+            <div class="about-right">
+                <div class="feature-card">
+                    <div class="feature-icon-box icon-blue">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h4>ROAS–Focused</h4>
+                        <p>Every decision tied to ROI</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box icon-purple">
+                        <i class="fa-solid fa-crosshairs"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h4>Precision Targeting</h4>
+                        <p>Right audience, right message</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box icon-green">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h4>Data–Driven Testing</h4>
+                        <p>Continuous A/B optimization</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Section 3: Canvas Framework Section -->
+    <section class="canvas-section reveal" id="strategy">
+        <div class="section-header">
+            <span class="framework-badge">FRAMEWORK</span>
+            <h2>My Strategic Growth Canvas</h2>
+            <p>
+                A successful campaign is never random. Every project follows this proven 3-stage funnel blueprint that turns cold audiences into loyal, high-value customers:
+            </p>
+        </div>
+
+        <div class="canvas-card-container">
+            <div class="timeline-line"></div>
+
+            <div class="canvas-grid">
+                
+                <!-- Stage 01: TOFU -->
+                <div class="canvas-col">
+                    <div class="col-icon-box stage-1">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <span class="col-badge stage-1">STAGE 01 • BEFORE (TOFU)</span>
+                    <h3>Top of Funnel • Prospects</h3>
+                    <p>
+                        Pinpointing your ideal target market with precise demographic profiling, capturing immediate attention, crafting an irresistible Unique Selling Proposition (USP), and maximizing multi-channel reach.
+                    </p>
+                </div>
+
+                <!-- Stage 02: MOFU -->
+                <div class="canvas-col">
+                    <div class="col-icon-box stage-2">
+                        <i class="fa-solid fa-rectangle-ad"></i>
+                    </div>
+                    <span class="col-badge stage-2">STAGE 02 • DURING (MOFU)</span>
+                    <h3>Middle of Funnel • Leads</h3>
+                    <p>
+                        Capturing high-intent lead data (Lead Capture), nurturing prospects through value-driven content, establishing complete market authority, and building deep brand trust.
+                    </p>
+                </div>
+
+                <!-- Stage 03: BOFU -->
+                <div class="canvas-col">
+                    <div class="col-icon-box stage-3">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <span class="col-badge stage-3">STAGE 03 • AFTER (BOFU)</span>
+                    <h3>Bottom of Funnel • Customers</h3>
+                    <p>
+                        Closing high-ticket sales with irresistible offers, delivering an unforgettable customer experience, expanding Customer Lifetime Value (LTV), and driving continuous repeat referrals.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Services Offered & Expertise Badges -->
+    <section class="services-section reveal" id="services">
+        <div class="section-header">
+            <h2>Services & Core Expertise</h2>
+            <p>Comprehensive growth capabilities tailored to boost revenue.</p>
+        </div>
+
+        <div class="tags-wrapper">
+            <span class="tag-badge"><i class="fa-solid fa-chess-knight"></i> Marketing Strategy</span>
+            <span class="tag-badge"><i class="fa-solid fa-rectangle-ad"></i> Digital Advertising</span>
+            <span class="tag-badge"><i class="fa-solid fa-share-nodes"></i> Social Media Marketing</span>
+            <span class="tag-badge"><i class="fa-solid fa-bullhorn"></i> Brand Marketing</span>
+            <span class="tag-badge"><i class="fa-solid fa-pen-nib"></i> Content Strategy</span>
+            <span class="tag-badge"><i class="fa-solid fa-chart-line"></i> Performance Marketing</span>
+            <span class="tag-badge"><i class="fa-solid fa-filter-circle-dollar"></i> Sales Funnel Optimization</span>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fa-solid fa-diagram-project service-icon"></i>
+                <h4>End-to-End Marketing Strategy</h4>
+                <p>Designing comprehensive 1-page marketing plans tailored to your specific business model with step-by-step implementation monitoring.</p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-rectangle-ad service-icon"></i>
+                <h4>Meta Ads Campaign Management</h4>
+                <p>Full management of Facebook & Instagram ad campaigns, utilizing advanced audience segmentation to maximize your ad budget efficiency.</p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-chart-pie service-icon"></i>
+                <h4>Data Analytics & ROAS Optimization</h4>
+                <p>In-depth metrics analysis, continuous A/B testing, and campaign restructuring focused on constantly raising your Return on Ad Spend.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Tools & Tech Stack -->
+    <section class="tools-section reveal" id="tools">
+        <div class="section-header">
+            <h2>Tools & Tech Stack</h2>
+            <p>The official specialized platforms and AI engines leveraged to research, deploy, and scale campaigns.</p>
+        </div>
+
+        <div class="tools-layout">
+            
+            <div class="tools-category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-rectangle-ad"></i>
+                    <h4>Paid Advertising Platforms</h4>
+                </div>
+                <div class="brand-pills-container">
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#0668E1"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        Meta Ads Manager
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.15C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.99-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.72-4.96z"/></svg>
+                        Google Ads
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.31 1.56-1.24 2.56.03.74.4 1.46.99 1.89.89.65 2.11.75 3.08.26.89-.43 1.52-1.31 1.61-2.29.04-2.88.01-5.76.02-8.64-.01-3.65-.01-7.3-.01-10.95z"/></svg>
+                        TikTok Ads
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#FFFC00"><path d="M12 2.163c-3.23 0-5.85 2.619-5.85 5.849 0 2.379 1.395 4.382 3.405 5.279-.24.781-.9 1.411-1.74 1.742-.72.299-1.53.18-2.19-.3-.33-.24-.78-.21-1.08.06-.33.3-.36.81-.09 1.17.9.99 2.19 1.53 3.51 1.53 1.23 0 2.43-.48 3.33-1.35.9.87 2.1 1.35 3.33 1.35 1.32 0 2.61-.54 3.51-1.53.27-.36.24-.87-.09-1.17-.3-.27-.75-.3-1.08-.06-.66.48-1.47.6-2.19.3-.84-.331-1.5-.961-1.74-1.742 2.01-.897 3.405-2.9 3.405-5.279 0-3.23-2.62-5.849-5.85-5.849z"/></svg>
+                        Snapchat Ads
+                    </span>
+                </div>
+            </div>
+
+            <div class="tools-category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    <h4>Market Research & Intelligence</h4>
+                </div>
+                <div class="brand-pills-container">
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                        Google Trends
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#0668E1"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        Meta Ad Library
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#25F4EE"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+                        TikTok Creative Center
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#002147"><path fill="#3b82f6" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        Similarweb
+                    </span>
+                </div>
+            </div>
+
+            <div class="tools-category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-brain"></i>
+                    <h4>AI Deep Research Tools</h4>
+                </div>
+                <div class="brand-pills-container">
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#20B2AA"><path d="M12 0L9.17 9.17L0 12l9.17 2.83L12 24l2.83-9.17L24 12l-9.17-2.83z"/></svg>
+                        Perplexity AI
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#10A37F"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zM13.2599 22.2104a4.3435 4.3435 0 0 1-2.3831-.7025l.1379-.2393 3.9525-6.8483a.8506.8506 0 0 0-.3107-1.1616.8363.8363 0 0 0-1.1568.3107l-3.5653 6.1763-1.6397-.9465 3.5605-6.1715a.8458.8458 0 0 0-.3107-1.1568.841.841 0 0 0-1.1568.3107l-3.5653 6.1763-1.6397-.9465 3.5605-6.1715a.8458.8458 0 0 0-.3107-1.1568.841.841 0 0 0-1.1568.3107L3.8291 14.4a4.3387 4.3387 0 0 1 1.3433-5.2632l.2393-.1379 6.8483 3.9525a.8506.8506 0 0 0 1.1616-.3107.8363.8363 0 0 0-.3107-1.1568L6.9344 7.5186l.9465-1.6397 6.1715 3.5605a.8458.8458 0 0 0 1.1568-.3107.841.841 0 0 0-.3107-1.1568L8.727 4.4114l.9465-1.6397 6.1715 3.5605a.8458.8458 0 0 0 1.1568-.3107.841.841 0 0 0-.3107-1.1568l-3.0881-1.7831a4.3387 4.3387 0 0 1 5.2632 1.3433l.1379.2393-3.9525 6.8483a.8506.8506 0 0 0 .3107 1.1616.8363.8363 0 0 0 1.1568-.3107l3.5653-6.1763 1.6397.9465-3.5605 6.1715a.8458.8458 0 0 0 .3107 1.1568.841.841 0 0 0 1.1568-.3107l3.5653-6.1763 1.6397.9465-3.5605 6.1715a.8458.8458 0 0 0 .3107 1.1568.841.841 0 0 0 1.1568-.3107l3.0881 1.7831a4.3387 4.3387 0 0 1-1.3433 5.2632l-.2393.1379-6.8483-3.9525a.8506.8506 0 0 0-1.1616.3107.8363.8363 0 0 0 .3107 1.1568l6.1763 3.5653-.9465 1.6397-6.1715-3.5605a.8458.8458 0 0 0-1.1568.3107.841.841 0 0 0 .3107 1.1568l6.1763 3.5653-.9465 1.6397-6.1715-3.5605a.8458.8458 0 0 0-1.1568.3107.841.841 0 0 0 .3107 1.1568z"/></svg>
+                        ChatGPT Plus
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#D97706"><path d="M4.5 3A1.5 1.5 0 0 0 3 4.5v15A1.5 1.5 0 0 0 4.5 21h15a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 19.5 3h-15zM8 7.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5H8a.5.5 0 0 1-.5-.5V8a.5.5 0 0 1 .5-.5z"/></svg>
+                        Claude AI
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24"><path fill="#8E75FF" d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/></svg>
+                        Google Gemini
+                    </span>
+                </div>
+            </div>
+
+            <div class="tools-category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <h4>Analytics & Tracking</h4>
+                </div>
+                <div class="brand-pills-container">
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24"><path fill="#E37400" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-5h2v5zm4 0h-2V7h2v10zm4 0h-2v-8h2v8z"/></svg>
+                        Google Analytics 4 (GA4)
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#246FDB"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Google Tag Manager
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#0668E1"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                        Meta Pixel & CAPI
+                    </span>
+                </div>
+            </div>
+
+            <div class="tools-category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-table"></i>
+                    <h4>Data & Office Software</h4>
+                </div>
+                <div class="brand-pills-container">
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#107C41"><path d="M21.17 3H7.83A1.83 1.83 0 0 0 6 4.83v14.34A1.83 1.83 0 0 0 7.83 21h13.34A1.83 1.83 0 0 0 23 19.17V4.83A1.83 1.83 0 0 0 21.17 3zM1 18l4-6-4-6h3l2.5 4L9 6h3L8 12l4 6H9l-2.5-4L4 18H1z"/></svg>
+                        Advanced MS Excel
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#0F9D58"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                        Google Sheets
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#38bdf8"><path d="M4 6h16v10H4zm16 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2zm-8 1h4v2h-4z"/></svg>
+                        Office Operations
+                    </span>
+                </div>
+            </div>
+
+            <div class="tools-category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-laptop-code"></i>
+                    <h4>Store & Web Infrastructure</h4>
+                </div>
+                <div class="brand-pills-container">
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#95BF47"><path d="M15.3 3.6c-.1 0-.2.1-.2.2l-.7 3.3c-.5-.1-1-.2-1.5-.2-2.8 0-4.9 2-4.9 4.8 0 2.5 1.7 4.2 4.1 4.2 2.6 0 4.6-1.8 4.6-4.6 0-.3 0-.6-.1-.9l1.4-2.8c.1-.2 0-.4-.2-.5l-2.5-1.5zm-3.1 9.8c-1.3 0-2.3-1-2.3-2.3 0-1.5 1.1-2.6 2.6-2.6.3 0 .7.1 1 .2l-1.3 4.7c-.3 0-.7 0-1 0z"/></svg>
+                        Shopify
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#007ACC"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.276a1 1 0 0 0 0 1.448l3.163 2.924L.327 14.572a1 1 0 0 0 0 1.448l1.322 1.217a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.705.29l4.94-2.377A1.5 1.5 0 0 0 24 19.348V4.252a1.5 1.5 0 0 0-.85-1.665z"/></svg>
+                        VS Code
+                    </span>
+                    <span class="brand-pill">
+                        <svg viewBox="0 0 24 24" fill="#E34F26"><path d="M1.5 0h21l-1.91 21.563L11.97 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.625 10.267.014.234-2.639H5.406l.69 7.75h8.61l-.367 4.125-2.369.641-2.38-.642-.152-1.719H7.062l.302 3.404 4.606 1.278 4.61-1.278.63-7.063H8.531z"/></svg>
+                        HTML5 / CSS3
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Section 6: Skills & Experience Dashboard -->
+    <section class="dashboard reveal" id="experience">
+        <div class="dashboard-column">
+            <h4>Advertising Skills</h4>
+            
+            <div class="skill-item">
+                <div class="skill-info"><span>Meta Ads (Facebook & Instagram)</span><span>95%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="95%"></div></div>
+            </div>
+            
+            <div class="skill-item">
+                <div class="skill-info"><span>Google Ads (Search & Display)</span><span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info"><span>TikTok Ads</span><span>80%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="80%"></div></div>
+            </div>
+
+            <div class="skill-item">
+                <div class="skill-info"><span>Data Analytics (Google Analytics)</span><span>75%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="75%"></div></div>
+            </div>
+
+            <h4 style="margin-top: 40px;">Languages</h4>
+            <div class="skill-item">
+                <div class="skill-info"><span>Arabic (Native)</span><span>100%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="100%"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-info"><span>English</span><span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" data-width="85%"></div></div>
+            </div>
+        </div>
+
+        <div class="dashboard-column">
+            <h4>Professional Experience</h4>
+            <ul class="timeline">
+                <li class="timeline-item">
+                    <h5>Media Buyer Specialist</h5>
+                    <span>2024 - Present</span>
+                    <p>Managing high-budget ad campaigns for local and regional e-commerce brands, driving exceptional Return on Ad Spend (ROAS).</p>
+                </li>
+                <li class="timeline-item">
+                    <h5>Performance Marketer</h5>
+                    <span>2022 - 2024</span>
+                    <p>Designing custom sales funnels and high-converting landing pages to boost direct purchase conversion rates.</p>
+                </li>
+            </ul>
+
+            <h4>What Can I Bring to Your Business?</h4>
+            <ul class="text-list">
+                <li><strong>Increased Revenue & Sales:</strong> Transforming underperforming ad budgets into data-backed, scalable sales machines.</li>
+                <li><strong>High-Intent Audience Targeting:</strong> Reaching buyers who are ready to take action, minimizing wasted spend on unqualified clicks.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Section 7: Contact & CTA Section -->
+    <section class="contact-cta reveal" id="contact">
+        <div class="cta-container">
+            <h2>Ready to Scale Your Business?</h2>
+            <p>
+                Have a new project, an existing ad account that needs optimization, or looking for a custom marketing strategy? Let's connect and discuss how we can grow your revenue.
+            </p>
+
+            <div class="contact-cards">
+                <a href="https://wa.me/201129114212" target="_blank" class="contact-card">
+                    <div class="card-icon">
+                        <i class="fa-brands fa-whatsapp icon-whatsapp"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>WhatsApp</h3>
+                        <span>Chat Directly</span>
+                    </div>
+                </a>
+
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abdlkayomd@gmail.com" target="_blank" class="contact-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-envelope icon-gmail"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Email</h3>
+                        <span>Send a Message</span>
+                    </div>
+                </a>
+
+                <a href="https://www.linkedin.com/in/abdelkaioum-beldjoudi-64585b228/" target="_blank" class="contact-card">
+                    <div class="card-icon">
+                        <i class="fa-brands fa-linkedin-in icon-linkedin"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>LinkedIn</h3>
+                        <span>Connect Professionally</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" aria-label="Instagram">
+                <i class="fa-brands fa-instagram icon-instagram"></i>
             </a>
-            <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" rel="noreferrer" aria-label="Facebook">
-              <i className="fa-brands fa-facebook icon-facebook"></i>
+            <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" aria-label="Facebook">
+                <i class="fa-brands fa-facebook icon-facebook"></i>
             </a>
-          </div>
         </div>
-      </header>
+        <p>© 2026 Abdelkaioum Beldjoudi. All rights reserved.</p>
+    </footer>
 
-      {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section
-        className={`hero reveal${heroReveal.visible ? ' active' : ''}`}
-        id="home"
-        ref={heroReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="hero-text">
-          <div className="hero-name">{t.heroName}</div>
-          <h1>{t.heroH1}</h1>
-          <div className="hero-subtitle">{t.heroSubtitle}</div>
-          <p className="hero-desc">{t.heroDesc}</p>
-          <div className="hero-buttons">
-            <a href="#contact" className="btn-outline active">{t.heroBtn1}</a>
-            <a href="#strategy" className="btn-outline">{t.heroBtn2}</a>
-          </div>
-        </div>
-        <div className="hero-image">
-          <img src="profile.png" alt="Abdelkaioum Beldjoudi" />
-        </div>
-      </section>
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOnScroll = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
 
-      {/* ── ABOUT ──────────────────────────────────────────────────────── */}
-      <section
-        className={`about reveal${aboutReveal.visible ? ' active' : ''}`}
-        id="about"
-        ref={aboutReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="about-grid">
-          <div className="about-left">
-            <span className="framework-badge">{t.aboutBadge}</span>
-            <h2>{t.aboutH2}</h2>
-            <a href={`mailto:${t.aboutEmail}`} className="about-email">
-              <i className="fa-solid fa-envelope"></i> {t.aboutEmail}
-            </a>
-            <p className="about-p-text">{t.aboutP1}</p>
-            <p className="about-p-text">{t.aboutP2}</p>
-            <div className="about-pills">
-              {t.pills.map((p, i) => <span className="about-pill" key={i}>{p}</span>)}
-            </div>
-            <div className="about-location">
-              <i className="fa-solid fa-location-dot"></i> {t.location}
-            </div>
-          </div>
+            reveals.forEach(reveal => revealOnScroll.observe(reveal));
 
-          <div className="about-right">
-            <div className="feature-card">
-              <div className="feature-icon-box icon-blue"><i className="fa-solid fa-chart-line"></i></div>
-              <div className="feature-info"><h4>{t.fc1Title}</h4><p>{t.fc1Desc}</p></div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon-box icon-purple"><i className="fa-solid fa-crosshairs"></i></div>
-              <div className="feature-info"><h4>{t.fc2Title}</h4><p>{t.fc2Desc}</p></div>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon-box icon-green"><i className="fa-solid fa-flask"></i></div>
-              <div className="feature-info"><h4>{t.fc3Title}</h4><p>{t.fc3Desc}</p></div>
-            </div>
-          </div>
-        </div>
-      </section>
+            const skillBars = document.querySelectorAll('.skill-item');
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progress = entry.target.querySelector('.progress-fill');
+                        if (progress) {
+                            progress.style.width = progress.getAttribute('data-width');
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
 
-      {/* ── CANVAS FRAMEWORK ───────────────────────────────────────────── */}
-      <section
-        className={`canvas-section reveal${canvasReveal.visible ? ' active' : ''}`}
-        id="strategy"
-        ref={canvasReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="section-header">
-          <span className="framework-badge">{t.frameworkBadge}</span>
-          <h2>{t.frameworkH2}</h2>
-          <p>{t.frameworkDesc}</p>
-        </div>
-
-        <div className="canvas-card-container">
-          <div className="timeline-line"></div>
-          <div className="canvas-grid">
-            <div className="canvas-col">
-              <div className="col-icon-box stage-1"><i className="fa-solid fa-magnifying-glass"></i></div>
-              <span className="col-badge stage-1">{t.stage1Badge}</span>
-              <h3>{t.stage1H3}</h3>
-              <p>{t.stage1P}</p>
-            </div>
-            <div className="canvas-col">
-              <div className="col-icon-box stage-2"><i className="fa-solid fa-rectangle-ad"></i></div>
-              <span className="col-badge stage-2">{t.stage2Badge}</span>
-              <h3>{t.stage2H3}</h3>
-              <p>{t.stage2P}</p>
-            </div>
-            <div className="canvas-col">
-              <div className="col-icon-box stage-3"><i className="fa-solid fa-chart-line"></i></div>
-              <span className="col-badge stage-3">{t.stage3Badge}</span>
-              <h3>{t.stage3H3}</h3>
-              <p>{t.stage3P}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SERVICES ───────────────────────────────────────────────────── */}
-      <section
-        className={`services-section reveal${servicesReveal.visible ? ' active' : ''}`}
-        id="services"
-        ref={servicesReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="section-header">
-          <span className="framework-badge">{t.servicesBadge}</span>
-          <h2>{t.servicesH2}</h2>
-          <p>{t.servicesDesc}</p>
-        </div>
-
-        <div className="tags-wrapper">
-          {t.tags.map((tag, i) => (
-            <span className="tag-badge" key={i}>
-              <i className={`fa-solid ${tag.icon}`}></i> {tag.label}
-            </span>
-          ))}
-        </div>
-
-        <div className="services-grid">
-          <div className="service-card">
-            <i className={`fa-solid ${t.srv1Icon} service-icon`}></i>
-            <h4>{t.srv1H4}</h4>
-            <p>{t.srv1P}</p>
-          </div>
-          <div className="service-card">
-            <i className={`fa-solid ${t.srv2Icon} service-icon`}></i>
-            <h4>{t.srv2H4}</h4>
-            <p>{t.srv2P}</p>
-          </div>
-          <div className="service-card">
-            <i className={`fa-solid ${t.srv3Icon} service-icon`}></i>
-            <h4>{t.srv3H4}</h4>
-            <p>{t.srv3P}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── TOOLS ──────────────────────────────────────────────────────── */}
-      <section
-        className={`tools-section reveal${toolsReveal.visible ? ' active' : ''}`}
-        id="tools"
-        ref={toolsReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="section-header">
-          <span className="framework-badge">{t.toolsBadge}</span>
-          <h2>{t.toolsH2}</h2>
-          <p>{t.toolsDesc}</p>
-        </div>
-
-        <div className="tools-layout">
-          {/* Paid Platforms */}
-          <div className="tools-category-card">
-            <div className="category-header">
-              <i className="fa-solid fa-rectangle-ad"></i>
-              <h4>{t.toolCat1}</h4>
-            </div>
-            <div className="brand-pills-container">
-              <span className="brand-pill"><MetaSVG /> Meta Ads Manager</span>
-              <span className="brand-pill"><GoogleSVG /> Google Ads</span>
-              <span className="brand-pill"><TikTokSVG /> TikTok Ads</span>
-              <span className="brand-pill"><SnapSVG /> Snapchat Ads</span>
-            </div>
-          </div>
-
-          {/* Research */}
-          <div className="tools-category-card">
-            <div className="category-header">
-              <i className="fa-solid fa-magnifying-glass-chart"></i>
-              <h4>{t.toolCat2}</h4>
-            </div>
-            <div className="brand-pills-container">
-              <span className="brand-pill"><GoogleTrendsSVG /> Google Trends</span>
-              <span className="brand-pill"><MetaLibSVG /> Meta Ad Library</span>
-              <span className="brand-pill"><TikTokCCSVG /> TikTok Creative Center</span>
-              <span className="brand-pill"><SimilarwebSVG /> Similarweb</span>
-            </div>
-          </div>
-
-          {/* AI */}
-          <div className="tools-category-card">
-            <div className="category-header">
-              <i className="fa-solid fa-brain"></i>
-              <h4>{t.toolCat3}</h4>
-            </div>
-            <div className="brand-pills-container">
-              <span className="brand-pill"><PerplexitySVG /> Perplexity AI</span>
-              <span className="brand-pill"><ChatGPTSVG /> ChatGPT Plus</span>
-              <span className="brand-pill"><ClaudeSVG /> Claude AI</span>
-              <span className="brand-pill"><GeminiSVG /> Google Gemini</span>
-            </div>
-          </div>
-
-          {/* Analytics */}
-          <div className="tools-category-card">
-            <div className="category-header">
-              <i className="fa-solid fa-chart-column"></i>
-              <h4>{t.toolCat4}</h4>
-            </div>
-            <div className="brand-pills-container">
-              <span className="brand-pill"><GA4SVG /> Google Analytics 4 (GA4)</span>
-              <span className="brand-pill"><GTMSVG /> Google Tag Manager</span>
-              <span className="brand-pill"><PixelSVG /> Meta Pixel & CAPI</span>
-            </div>
-          </div>
-
-          {/* Data */}
-          <div className="tools-category-card">
-            <div className="category-header">
-              <i className="fa-solid fa-table"></i>
-              <h4>{t.toolCat5}</h4>
-            </div>
-            <div className="brand-pills-container">
-              <span className="brand-pill"><ExcelSVG /> Advanced MS Excel</span>
-              <span className="brand-pill"><SheetsSVG /> Google Sheets</span>
-              <span className="brand-pill"><OfficeSVG /> Office Operations</span>
-            </div>
-          </div>
-
-          {/* Store / Web */}
-          <div className="tools-category-card">
-            <div className="category-header">
-              <i className="fa-solid fa-laptop-code"></i>
-              <h4>{t.toolCat6}</h4>
-            </div>
-            <div className="brand-pills-container">
-              <span className="brand-pill"><ShopifySVG /> Shopify</span>
-              <span className="brand-pill"><VsCodeSVG /> VS Code</span>
-              <span className="brand-pill"><HTMLSVG /> HTML5 / CSS3</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── DASHBOARD ──────────────────────────────────────────────────── */}
-      <section
-        className={`dashboard reveal${dashReveal.visible ? ' active' : ''}`}
-        id="experience"
-        ref={dashReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="section-header" style={{ gridColumn: '1 / -1' }}>
-          <span className="framework-badge">{t.dashBadge}</span>
-        </div>
-
-        <div className="dashboard-column">
-          <h4>{t.skillsH4}</h4>
-          {t.skills.map((s, i) => (
-            <SkillBar key={i} label={s.label} val={s.val} trigger={skillTrigger} />
-          ))}
-
-          <h4 style={{ marginTop: '40px' }}>{t.langH4}</h4>
-          {t.langs.map((l, i) => (
-            <SkillBar key={i} label={l.label} val={l.val} trigger={skillTrigger} />
-          ))}
-        </div>
-
-        <div className="dashboard-column">
-          <h4>{t.expH4}</h4>
-          <ul className="timeline">
-            {t.exp.map((e, i) => (
-              <li className="timeline-item" key={i}>
-                <h5>{e.title}</h5>
-                <span>{e.period}</span>
-                <p>{e.desc}</p>
-              </li>
-            ))}
-          </ul>
-
-          <h4>{t.valueH4}</h4>
-          <ul className="text-list">
-            {t.value.map((v, i) => (
-              <li key={i}>
-                <strong>{v.strong}</strong> {v.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── CONTACT ────────────────────────────────────────────────────── */}
-      <section
-        className={`contact-cta reveal${contactReveal.visible ? ' active' : ''}`}
-        id="contact"
-        ref={contactReveal.ref as React.RefObject<HTMLElement>}
-      >
-        <div className="cta-container">
-          <span className="framework-badge">{t.contactBadge}</span>
-          <h2>{t.contactH2}</h2>
-          <p>{t.contactDesc}</p>
-
-          <div className="contact-cards">
-            <a href="https://wa.me/201129114212" target="_blank" rel="noreferrer" className="contact-card">
-              <div className="card-icon"><i className="fa-brands fa-whatsapp icon-whatsapp"></i></div>
-              <div className="card-info"><h3>{t.contactCard1Title}</h3><span>{t.contactCard1Sub}</span></div>
-            </a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abdlkayomd@gmail.com" target="_blank" rel="noreferrer" className="contact-card">
-              <div className="card-icon"><i className="fa-solid fa-envelope icon-gmail"></i></div>
-              <div className="card-info"><h3>{t.contactCard2Title}</h3><span>{t.contactCard2Sub}</span></div>
-            </a>
-            <a href="https://www.linkedin.com/in/abdelkaioum-beldjoudi-64585b228/" target="_blank" rel="noreferrer" className="contact-card">
-              <div className="card-icon"><i className="fa-brands fa-linkedin-in icon-linkedin"></i></div>
-              <div className="card-info"><h3>{t.contactCard3Title}</h3><span>{t.contactCard3Sub}</span></div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FOOTER ─────────────────────────────────────────────────────── */}
-      <footer>
-        <div className="footer-socials">
-          <a href="https://www.instagram.com/abdelkaioum.dz.2/" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <i className="fa-brands fa-instagram icon-instagram"></i>
-          </a>
-          <a href="https://www.facebook.com/abdelkaioum.beldjoumdi/" target="_blank" rel="noreferrer" aria-label="Facebook">
-            <i className="fa-brands fa-facebook icon-facebook"></i>
-          </a>
-        </div>
-        <p>{t.footerCopy}</p>
-      </footer>
-
-    </div>
-  );
-}
+            skillBars.forEach(bar => skillObserver.observe(bar));
+        });
+    </script>
+</body>
+</html>
