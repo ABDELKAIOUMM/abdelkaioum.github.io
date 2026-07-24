@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abdelkaioum Beldjoudi | Performance Marketer</title>
   
-  <!-- خطوط Google Fonts للغة العربية والإنجليزية -->
+  <!-- خطوط Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* Global Styles & Variables */
     :root {
       --bg-color: #0b0f17;
       --card-bg: #111827;
@@ -39,12 +38,11 @@
       flex-direction: column;
     }
 
-    /* RTL Font Switching */
     html[dir="rtl"] body {
       font-family: var(--font-ar);
     }
 
-    /* Navbar Header */
+    /* تثبيت الهيدر دائماً (اللوجو على اليسار والأزرار على اليمين) */
     header {
       display: flex;
       justify-content: space-between;
@@ -53,6 +51,7 @@
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
+      direction: ltr !important; /* يحافظ على الترتيب الأصلي للهيدر */
     }
 
     .logo {
@@ -68,35 +67,19 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
 
     .phone-number {
       color: var(--text-muted);
       font-size: 0.9rem;
       text-decoration: none;
-      direction: ltr; /* Keeps phone number correctly formatted */
     }
 
-    .social-links {
-      display: flex;
-      gap: 0.8rem;
-    }
-
-    .social-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .social-links a:hover {
-      color: var(--primary);
-    }
-
-    /* Language Toggle Button (Globe) */
+    /* زر الترجمة */
     .lang-btn {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-main);
       padding: 0.5rem 0.9rem;
       border-radius: 20px;
@@ -116,12 +99,12 @@
     }
 
     .globe-icon {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: currentColor;
     }
 
-    /* Hero Section */
+    /* قسم الهيرو */
     .hero {
       display: flex;
       align-items: center;
@@ -131,6 +114,7 @@
       padding: 3rem 5%;
       gap: 3rem;
       flex: 1;
+      width: 100%;
     }
 
     .hero-content {
@@ -140,17 +124,16 @@
 
     .name-tag {
       color: var(--primary);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 800;
       letter-spacing: 1px;
       margin-bottom: 0.5rem;
-      text-transform: uppercase;
     }
 
     .hero-title {
       font-size: 2.8rem;
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.2;
       margin-bottom: 1.2rem;
     }
 
@@ -161,7 +144,7 @@
       color: var(--primary);
       padding: 0.4rem 1.2rem;
       border-radius: 50px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       margin-bottom: 1.5rem;
     }
@@ -186,7 +169,6 @@
       text-decoration: none;
       font-size: 0.95rem;
       transition: all 0.2s ease;
-      cursor: pointer;
     }
 
     .btn-primary {
@@ -197,7 +179,6 @@
 
     .btn-primary:hover {
       background: var(--primary-hover);
-      border-color: var(--primary-hover);
     }
 
     .btn-secondary {
@@ -210,11 +191,11 @@
       border-color: var(--text-main);
     }
 
-    /* Hero Image */
     .hero-image {
       flex: 1;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
     .hero-image img {
@@ -224,36 +205,23 @@
       object-fit: contain;
     }
 
-    /* Responsive Design */
     @media (max-width: 900px) {
       .hero {
         flex-direction: column-reverse;
         text-align: center;
-        padding-top: 1rem;
       }
-
-      .hero-desc {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
       .hero-buttons {
         justify-content: center;
       }
-
-      .nav-right {
-        gap: 0.8rem;
-      }
-
       .phone-number {
-        display: none; /* إخفاء رقم الهاتف في الشاشات الصغيرة للمحافظة على التنسيق */
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header / Navbar -->
+  <!-- Header -->
   <header>
     <div class="logo">
       Abdelkaioum <span>Beldjoudi</span>
@@ -262,7 +230,6 @@
     <div class="nav-right">
       <a href="tel:+201129114212" class="phone-number">+20 112 911 4212</a>
       
-      <!-- زر الترجمة مع أيقونة الكوكب -->
       <button id="lang-toggle" class="lang-btn" aria-label="Toggle Language">
         <svg class="globe-icon" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
@@ -273,7 +240,7 @@
   </header>
 
   <!-- Hero Section -->
-  <main class="hero" id="strategy">
+  <main class="hero">
     <div class="hero-content">
       <div class="name-tag" data-i18n="name_tag">ABDELKAIOUM BELDJOUDI</div>
       <h1 class="hero-title" data-i18n="hero_title">Performance Marketer & Media Buyer</h1>
@@ -291,14 +258,12 @@
     </div>
 
     <div class="hero-image">
-      <!-- استبدل الرابط أدناه برابط صورتك الشخصية -->
-      <img src="your-photo.png" alt="Abdelkaioum Beldjoudi">
+      <!-- استبدل "profile.png" باسم ملف صورتك الموجود في مستودع GitHub -->
+      <img src="profile.png" alt="Abdelkaioum Beldjoudi" onerror="this.style.display='none'">
     </div>
   </main>
 
-  <!-- Script للتحكم في الترجمة والدعم اللغوي -->
   <script>
-    // 1. قاموس النصوص (Translations Dictionary)
     const translations = {
       en: {
         name_tag: "ABDELKAIOUM BELDJOUDI",
@@ -320,15 +285,12 @@
       }
     };
 
-    // 2. التحقق من اللغة المخزنة أو الاعتماد على الإنجليزية كافتراضية
     let currentLang = localStorage.getItem('preferred_lang') || 'en';
 
-    // 3. دالة تطبيق اللغة والتأثيرات
     function setLanguage(lang) {
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
-      // تحديث كل النصوص المسجلة في data-i18n
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
@@ -336,21 +298,15 @@
         }
       });
 
-      // تحديث نص زر الترجمة
       document.getElementById('lang-text').textContent = translations[lang]['lang_btn'];
-
-      // حفظ تفضيل الزائر
       localStorage.setItem('preferred_lang', lang);
       currentLang = lang;
     }
 
-    // 4. حدث الضغط على زر الكوكب
     document.getElementById('lang-toggle').addEventListener('click', () => {
-      const nextLang = currentLang === 'en' ? 'ar' : 'en';
-      setLanguage(nextLang);
+      setLanguage(currentLang === 'en' ? 'ar' : 'en');
     });
 
-    // 5. تطبيق اللغة فور تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
       setLanguage(currentLang);
     });
